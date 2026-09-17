@@ -1,0 +1,15 @@
+{
+  "description": "We were charged $12,500 on our April invoice but our contract specifies $8,000 per month. This is the second consecutive month with an overcharge. We need a refund and a corrected invoice.",
+  "submitted_by": "Sarah Johnson",
+  "expected": {
+    "ticket_type": "Billing Inquiry",
+    "priority": "HIGH",
+    "assigned_team": "Finance — Senior Billing Specialist",
+    "sla_hours": 4,
+    "confidence": 0.93,
+    "note": "Escalated to HIGH because amount $12,500 exceeds the $5,000 threshold",
+    "extracted": {
+      "amount_mentioned": "$12,500.00"
+    }
+  }
+}

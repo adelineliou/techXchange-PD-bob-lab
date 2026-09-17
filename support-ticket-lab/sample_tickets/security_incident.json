@@ -1,0 +1,11 @@
+{
+  "description": "We received a phishing email that looks like it came from our own domain. Two employees may have clicked the link and entered their credentials on a fake login page.",
+  "submitted_by": "Jane Smith",
+  "expected": {
+    "ticket_type": "Security Incident",
+    "priority": "CRITICAL",
+    "assigned_team": "Security Operations Center (SOC)",
+    "sla_hours": 1,
+    "confidence": 0.96
+  }
+}

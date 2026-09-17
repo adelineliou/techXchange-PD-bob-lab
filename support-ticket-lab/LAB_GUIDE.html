@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IBM Bob Partner Lab — AI Ticket Classifier on Code Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────
+   CARBON DESIGN SYSTEM — TOKENS (v11 White theme)
+   ───────────────────────────────────────────── */
+:root {
+  /* Core palette */
+  --cds-blue-60:   #0f62fe;
+  --cds-blue-70:   #0043ce;
+  --cds-blue-80:   #002d9c;
+  --cds-blue-10:   #edf5ff;
+  --cds-blue-20:   #d0e2ff;
+  --cds-gray-100:  #161616;
+  --cds-gray-90:   #262626;
+  --cds-gray-80:   #393939;
+  --cds-gray-70:   #525252;
+  --cds-gray-50:   #8d8d8d;
+  --cds-gray-30:   #c6c6c6;
+  --cds-gray-20:   #e0e0e0;
+  --cds-gray-10:   #f4f4f4;
+  --cds-white:     #ffffff;
+  --cds-teal-60:   #007d79;
+  --cds-teal-10:   #d9fbfb;
+  --cds-teal-20:   #9ef0f0;
+  --cds-green-60:  #198038;
+  --cds-green-10:  #defbe6;
+  --cds-green-20:  #a7f0ba;
+  --cds-purple-70: #6929c4;
+  --cds-purple-10: #f6f2ff;
+  --cds-purple-20: #e8daff;
+  --cds-yellow-30: #f1c21b;
+  --cds-yellow-10: #fcf4d6;
+  --cds-red-60:    #da1e28;
+  --cds-red-10:    #fff1f1;
+
+  /* Semantic roles */
+  --text-primary:     var(--cds-gray-100);
+  --text-secondary:   var(--cds-gray-70);
+  --text-on-dark:     var(--cds-white);
+  --text-placeholder: var(--cds-gray-50);
+  --border-subtle:    var(--cds-gray-20);
+  --border-strong:    var(--cds-gray-50);
+  --layer-01:         var(--cds-white);
+  --layer-02:         var(--cds-gray-10);
+  --layer-03:         #e8e8e8;
+  --background:       var(--cds-white);
+  --background-hover: var(--cds-gray-10);
+  --interactive:      var(--cds-blue-60);
+  --focus:            var(--cds-blue-60);
+
+  /* Spacing (Carbon 8px base) */
+  --s-01: 2px;  --s-02: 4px;  --s-03: 8px;
+  --s-04: 12px; --s-05: 16px; --s-06: 24px;
+  --s-07: 32px; --s-08: 40px; --s-09: 48px;
+  --s-10: 64px; --s-11: 80px; --s-12: 96px;
+
+  /* Type scale (Carbon productive) */
+  --label-01-size:   12px; --label-01-weight: 400; --label-01-lh: 1.33;
+  --helper-01-size:  12px; --helper-01-weight: 400;
+  --body-compact-size: 14px; --body-compact-lh: 1.43;
+  --body-01-size:    14px; --body-01-lh: 1.43;
+  --body-02-size:    16px; --body-02-lh: 1.5;
+  --heading-02-size: 16px; --heading-02-weight: 600; --heading-02-lh: 1.375;
+  --heading-03-size: 20px; --heading-03-weight: 400; --heading-03-lh: 1.4;
+  --heading-04-size: 28px; --heading-04-weight: 400; --heading-04-lh: 1.29;
+  --heading-05-size: 36px; --heading-05-weight: 300; --heading-05-lh: 1.22;
+  --display-01-size: 54px; --display-01-weight: 300;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  font-size: var(--body-01-size);
+  line-height: var(--body-01-lh);
+  color: var(--text-primary);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Carbon UI Shell — Global Header ── */
+.cds--header {
+  position: sticky; top: 0; z-index: 8000;
+  display: flex; align-items: center;
+  height: 48px;
+  background: var(--cds-gray-100);
+  border-bottom: 1px solid var(--cds-gray-80);
+}
+.cds--header__name {
+  display: flex; align-items: center; gap: var(--s-04);
+  padding: 0 var(--s-05);
+  color: var(--text-on-dark);
+  font-size: var(--body-compact-size);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  border-right: 1px solid var(--cds-gray-80);
+  height: 100%;
+}
+.cds--header__name svg { flex-shrink: 0; }
+.cds--header__name-prefix {
+  font-weight: 300; color: var(--cds-gray-30); margin-right: 4px;
+}
+.header-tags {
+  display: flex; align-items: center; gap: var(--s-03);
+  padding: 0 var(--s-05); flex: 1;
+}
+.header-tag {
+  font-size: 11px; font-weight: 400; letter-spacing: .02em;
+  padding: 2px var(--s-03); border-radius: 2px;
+  background: var(--cds-gray-80); color: var(--cds-gray-30);
+  white-space: nowrap;
+}
+.header-tag.blue { background: #001d6c; color: var(--cds-blue-20); }
+.header-duration {
+  margin-left: auto; padding-right: var(--s-05);
+  font-size: 12px; color: var(--cds-gray-50);
+}
+
+/* ── Carbon Page Header (Expressive) ── */
+.page-header {
+  background: #001141;
+  padding: var(--s-10) var(--s-07) var(--s-09);
+  border-bottom: 1px solid #0353e9;
+}
+.page-header__eyebrow {
+  font-size: var(--label-01-size);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #a8c8ff;
+  margin-bottom: var(--s-04);
+}
+.page-header h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--cds-white);
+  max-width: 760px;
+  margin-bottom: var(--s-04);
+}
+.page-header h1 strong { font-weight: 400; color: #a8c8ff; }
+.page-header__desc {
+  font-size: var(--body-02-size);
+  color: #c6c6c6;
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: var(--s-06);
+}
+.cds--tag-group { display: flex; flex-wrap: wrap; gap: var(--s-03); }
+.cds--tag {
+  display: inline-flex; align-items: center;
+  height: 24px; padding: 0 var(--s-04);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 400;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  color: #e0e0e0;
+  white-space: nowrap;
+}
+
+/* ── Carbon Content Switcher (Tabs) ── */
+.cds--tabs {
+  background: var(--layer-02);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.cds--tabs__nav {
+  display: flex; list-style: none;
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 var(--s-07);
+  overflow-x: auto; scrollbar-width: none;
+}
+.cds--tabs__nav::-webkit-scrollbar { display: none; }
+.cds--tabs__nav-item { flex-shrink: 0; }
+.cds--tabs__nav-link {
+  display: block;
+  padding: 0 var(--s-05);
+  height: 40px; line-height: 40px;
+  font-size: var(--body-compact-size);
+  font-weight: 400;
+  color: var(--text-secondary);
+  border: none; border-bottom: 2px solid transparent;
+  background: none; cursor: pointer;
+  font-family: inherit;
+  transition: color .1s, border-color .1s, background .1s;
+  white-space: nowrap;
+}
+.cds--tabs__nav-link:hover {
+  color: var(--text-primary);
+  background: var(--background-hover);
+}
+.cds--tabs__nav-link.active {
+  font-weight: 600;
+  color: var(--interactive);
+  border-bottom-color: var(--interactive);
+}
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── Content ── */
+.cds--content {
+  max-width: 1056px; margin: 0 auto;
+  padding: var(--s-09) var(--s-07);
+}
+.cds--row { margin-bottom: var(--s-10); }
+
+/* ── Typography ── */
+.cds--productive-heading-04 {
+  font-size: var(--heading-04-size); font-weight: 400;
+  line-height: var(--heading-04-lh); color: var(--cds-gray-100);
+  margin-bottom: var(--s-05);
+}
+.cds--productive-heading-03 {
+  font-size: var(--heading-03-size); font-weight: 400;
+  line-height: var(--heading-03-lh); color: var(--cds-gray-100);
+  margin-bottom: var(--s-05);
+}
+.section-heading {
+  font-size: var(--heading-02-size);
+  font-weight: var(--heading-02-weight);
+  line-height: var(--heading-02-lh);
+  color: var(--text-primary);
+  padding-bottom: var(--s-03);
+  border-bottom: 2px solid var(--cds-blue-60);
+  margin-bottom: var(--s-06);
+}
+h3 {
+  font-size: var(--heading-02-size);
+  font-weight: var(--heading-02-weight);
+  color: var(--text-primary);
+  margin: var(--s-06) 0 var(--s-03);
+}
+h4 {
+  font-size: var(--body-compact-size);
+  font-weight: 600; color: var(--text-primary);
+  margin: var(--s-05) 0 var(--s-03);
+}
+p { margin-bottom: var(--s-04); color: var(--text-secondary); }
+ul, ol { padding-left: var(--s-06); color: var(--text-secondary); margin-bottom: var(--s-04); }
+li { margin-bottom: var(--s-02); }
+strong { color: var(--text-primary); font-weight: 600; }
+a { color: var(--interactive); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em { font-style: italic; }
+
+/* ── Carbon Tile ── */
+.cds--tile {
+  background: var(--layer-01);
+  border: 1px solid var(--border-subtle);
+  padding: var(--s-06);
+  transition: background .1s;
+}
+.cds--tile:hover { background: var(--background-hover); }
+
+/* ── Story tiles (3-col) ── */
+.cds--grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s-05); }
+@media(max-width:768px){ .cds--grid-3{ grid-template-columns:1fr; } }
+.cds--grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-05); }
+@media(max-width:640px){ .cds--grid-2{ grid-template-columns:1fr; } }
+
+.story-tile { padding: var(--s-06); border: 1px solid var(--border-subtle); background: var(--layer-01); position: relative; }
+.story-tile::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.s1::before { background: var(--cds-blue-60); }
+.s2::before { background: var(--cds-teal-60); }
+.s3::before { background: var(--cds-purple-70); }
+.story-num { font-size: 40px; font-weight: 300; line-height: 1; margin-bottom: var(--s-03); }
+.s1 .story-num { color: var(--cds-blue-60); }
+.s2 .story-num { color: var(--cds-teal-60); }
+.s3 .story-num { color: var(--cds-purple-70); }
+.story-tile h3 { font-size: 14px; font-weight: 600; margin: 0 0 var(--s-03); }
+.story-tile p { font-size: 13px; margin: 0; line-height: 1.5; }
+
+/* ── Carbon Inline Notification ── */
+.cds--inline-notification {
+  display: flex; align-items: flex-start; gap: var(--s-04);
+  padding: var(--s-04) var(--s-05);
+  border-left: 3px solid;
+  margin: var(--s-05) 0;
+}
+.cds--inline-notification--info    { background:#edf5ff; border-color:var(--cds-blue-60); }
+.cds--inline-notification--warning { background:var(--cds-yellow-10); border-color:var(--cds-yellow-30); }
+.cds--inline-notification--success { background:var(--cds-green-10); border-color:var(--cds-green-60); }
+.cds--inline-notification--error   { background:var(--cds-red-10); border-color:var(--cds-red-60); }
+.notif-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+.notif-body { flex: 1; }
+.notif-title {
+  font-size: var(--body-compact-size); font-weight: 600;
+  color: var(--text-primary); margin-bottom: var(--s-02);
+}
+.notif-body p { font-size: var(--body-compact-size); margin: 0; color: var(--text-primary); line-height: 1.6; }
+.notif-body blockquote { font-size: 14px; font-style: italic; color: var(--text-primary); line-height: 1.7; }
+
+/* ── Carbon Data Table ── */
+.cds--data-table-container { margin: var(--s-05) 0; }
+.cds--data-table { width: 100%; border-collapse: collapse; font-size: var(--body-compact-size); }
+.cds--data-table thead tr { border-bottom: 2px solid var(--cds-gray-90); }
+.cds--data-table th {
+  background: var(--cds-gray-10);
+  color: var(--text-secondary);
+  font-size: 12px; font-weight: 600; letter-spacing: .02em;
+  padding: var(--s-04) var(--s-05); text-align: left;
+  white-space: nowrap;
+}
+.cds--data-table td {
+  padding: var(--s-04) var(--s-05);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+.cds--data-table tbody tr:hover td { background: var(--cds-gray-10); }
+.cds--data-table .positive { color: var(--cds-green-60); font-weight: 600; }
+.table-caption { font-size: 11px; color: var(--text-placeholder); margin-top: var(--s-03); }
+
+/* ── Agenda tiles ── */
+.agenda-tile {
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--cds-blue-60);
+  padding: var(--s-05);
+  background: var(--layer-01);
+}
+.agenda-overline {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--cds-blue-60);
+  margin-bottom: var(--s-02);
+}
+.agenda-tile h3 { font-size: 14px; font-weight: 600; margin: 0 0 var(--s-03); }
+.agenda-tile p  { font-size: 13px; margin: 0; line-height: 1.55; }
+.cds--tag--blue {
+  display: inline-flex; align-items: center;
+  height: 20px; padding: 0 var(--s-03); border-radius: 100px;
+  font-size: 11px; font-weight: 600;
+  background: var(--cds-blue-10); color: var(--cds-blue-70);
+  margin-bottom: var(--s-03);
+}
+
+/* ── Track tiles ── */
+.track-tile {
+  border: 1px solid var(--border-subtle);
+  padding: var(--s-06); background: var(--layer-01);
+  position: relative;
+}
+.track-tile.track-a { border-top: 3px solid var(--cds-teal-60); }
+.track-tile.track-b { border-top: 3px solid var(--cds-purple-70); }
+.track-overline {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: var(--s-03);
+}
+.track-a .track-overline { color: var(--cds-teal-60); }
+.track-b .track-overline { color: var(--cds-purple-70); }
+.track-tile h3 { font-size: 15px; font-weight: 600; margin: 0 0 var(--s-03); }
+.track-tile > p { font-size: 13px; margin-bottom: var(--s-05); }
+.block-item { margin-top: var(--s-04); display: flex; gap: var(--s-03); align-items: flex-start; }
+.block-dot {
+  width: 20px; height: 20px; min-width: 20px; border-radius: 2px;
+  font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.track-a .block-dot { background: var(--cds-teal-10); color: #005a5a; }
+.track-b .block-dot { background: var(--cds-purple-10); color: #4a24a0; }
+.block-item p { font-size: 13px; margin: 0; }
+
+/* ── Code ── */
+pre {
+  background: var(--cds-gray-100);
+  color: #f4f4f4;
+  padding: var(--s-05) var(--s-06);
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 13px; line-height: 1.65;
+  overflow-x: auto; margin: var(--s-04) 0;
+  border-top: 2px solid #393939;
+}
+pre.light {
+  background: var(--cds-gray-10); color: var(--cds-gray-100);
+  border: 1px solid var(--border-subtle); border-top-color: var(--border-subtle);
+}
+code {
+  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-size: 13px; background: var(--cds-gray-10);
+  padding: 1px 5px; color: var(--cds-gray-100);
+  border: 1px solid var(--border-subtle);
+}
+.file-tree {
+  background: var(--cds-gray-100); color: #f4f4f4;
+  padding: var(--s-05) var(--s-06);
+  font-family: "IBM Plex Mono", monospace; font-size: 13px; line-height: 1.9;
+  border-top: 2px solid #393939;
+}
+.ft-dir  { color: #78a9ff; }
+.ft-file { color: #42be65; }
+.ft-note { color: #6f6f6f; }
+
+/* ── Prompt card ── */
+.cds--prompt-card {
+  background: var(--layer-01);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--cds-blue-60);
+  padding: var(--s-04) var(--s-05);
+  display: flex; gap: var(--s-04); align-items: flex-start;
+  margin: var(--s-04) 0;
+}
+.cds--prompt-card.warn { border-left-color: var(--cds-yellow-30); }
+.prompt-badge {
+  width: 24px; height: 24px; min-width: 24px; border-radius: 50%;
+  background: var(--cds-blue-20); color: var(--cds-blue-70);
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.prompt-badge.amber { background: #fdd13a; color: #3c2f00; }
+.prompt-meta { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--s-01); }
+.prompt-text { font-size: 14px; color: var(--text-primary); font-style: italic; line-height: 1.5; }
+
+/* ── Lab section / block ── */
+.lab-block { margin-bottom: var(--s-09); }
+.block-header {
+  display: flex; align-items: center; gap: var(--s-04);
+  background: var(--cds-gray-100);
+  padding: var(--s-04) var(--s-06);
+}
+.block-time-pill {
+  font-size: 11px; font-weight: 600;
+  background: var(--cds-blue-60); color: var(--cds-white);
+  padding: 2px var(--s-04); border-radius: 100px;
+  white-space: nowrap; letter-spacing: .02em;
+}
+.block-header h3 {
+  margin: 0; font-size: 14px; font-weight: 600; color: var(--cds-white);
+}
+.block-body {
+  border: 1px solid var(--border-subtle); border-top: none;
+  padding: var(--s-06);
+}
+
+/* ── Lab step ── */
+.lab-step { display: flex; gap: var(--s-05); margin-bottom: var(--s-07); }
+.lab-step:last-child { margin-bottom: 0; }
+.step-num {
+  width: 24px; height: 24px; min-width: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+}
+.step-num.a { background: var(--cds-teal-10); color: #005a5a; }
+.step-num.b { background: var(--cds-purple-10); color: #4a24a0; }
+.step-content { flex: 1; min-width: 0; }
+.step-content h4 { margin-top: 0; margin-bottom: var(--s-03); }
+.step-content p { font-size: var(--body-compact-size); margin-bottom: var(--s-03); }
+.step-content ul { font-size: var(--body-compact-size); }
+
+/* ── Screenshot placeholder ── */
+.screenshot-placeholder {
+  background: var(--layer-02);
+  border: 1px dashed var(--cds-gray-30);
+  padding: var(--s-08) var(--s-05);
+  text-align: center; margin: var(--s-04) 0;
+  color: var(--text-secondary);
+}
+.sc-icon { font-size: 22px; margin-bottom: var(--s-02); }
+.sc-label { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--s-01); }
+.sc-size  { font-size: 11px; color: var(--text-placeholder); }
+
+/* ── Credential box ── */
+.cred-box {
+  background: var(--cds-yellow-10);
+  border: 1px solid var(--cds-yellow-30);
+  border-left: 3px solid var(--cds-yellow-30);
+  padding: var(--s-04) var(--s-05);
+  margin: var(--s-04) 0;
+}
+.cred-title {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: #7d4600;
+  margin-bottom: var(--s-03);
+}
+.cred-box table { margin: 0; font-size: 13px; }
+.cred-box th { background: #fdd13a; color: #3c2f00; padding: var(--s-02) var(--s-04); font-size: 12px; }
+.cred-box td { padding: var(--s-02) var(--s-04); border-bottom: 1px solid #f1e0a0; color: #3c2f00; }
+.cred-box tr:last-child td { border-bottom: none; }
+
+/* ── Step badge (track overview) ── */
+.step-badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  padding: 2px var(--s-03); margin-bottom: var(--s-02);
+  border-radius: 2px;
+}
+.do   { background: var(--cds-teal-10); color: #005a5a; }
+.skip { background: var(--cds-gray-10); color: var(--text-secondary); }
+.step { margin-top: var(--s-04); }
+.step p { font-size: 13px; margin: 2px 0 0; }
+
+/* ── Extension tiles ── */
+.ext-tile {
+  border: 1px solid var(--border-subtle);
+  padding: var(--s-06); background: var(--layer-01);
+  display: flex; flex-direction: column;
+}
+.ext-num { font-size: 36px; font-weight: 300; color: var(--cds-gray-30); margin-bottom: var(--s-03); line-height: 1; }
+.ext-tile h3 { font-size: 14px; font-weight: 600; margin: 0 0 var(--s-03); }
+.ext-tile p { font-size: 13px; line-height: 1.55; }
+.ext-tile .ext-body { flex: 1; }
+.cds--tag--difficulty {
+  display: inline-flex; align-items: center;
+  height: 20px; padding: 0 var(--s-03); border-radius: 100px;
+  font-size: 11px; font-weight: 600; margin-top: var(--s-05);
+  width: fit-content;
+}
+.diff-easy { background: var(--cds-green-10); color: #044317; }
+.diff-med  { background: var(--cds-yellow-10); color: #7d4600; }
+.diff-adv  { background: var(--cds-purple-10); color: #31135e; }
+
+/* ── Track divider ── */
+.track-divider { display: flex; align-items: center; gap: var(--s-04); margin: var(--s-07) 0 var(--s-06); }
+.track-divider hr { flex: 1; border: none; border-top: 1px solid var(--border-subtle); }
+.track-divider-pill {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; padding: 3px var(--s-04); border-radius: 100px;
+}
+.track-divider-pill.a { background: var(--cds-teal-10); color: #005a5a; }
+.track-divider-pill.b { background: var(--cds-purple-10); color: #4a24a0; }
+
+/* ── Carbon UI Shell Footer ── */
+.cds--footer {
+  background: var(--cds-gray-100);
+  border-top: 1px solid var(--cds-gray-80);
+  padding: var(--s-06) var(--s-07);
+  display: flex; align-items: center; gap: var(--s-04);
+  margin-top: var(--s-10);
+}
+.cds--footer__logo svg { display: block; }
+.cds--footer__text {
+  font-size: 12px; color: var(--cds-gray-50);
+}
+.cds--footer__text a { color: var(--cds-gray-30); }
+
+/* ── Reference prompt section divider ── */
+.prompt-group-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-secondary);
+  padding: var(--s-03) 0 var(--s-02);
+  border-bottom: 1px solid var(--border-subtle);
+  margin: var(--s-06) 0 var(--s-04);
+}
+
+@media(max-width:640px){
+  .cds--content { padding: var(--s-07) var(--s-05); }
+  .page-header { padding: var(--s-07) var(--s-05) var(--s-08); }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ CARBON UI SHELL HEADER ════ -->
+<header class="cds--header" role="banner">
+  <a class="cds--header__name" href="#">
+    <!-- IBM "8-bar" logo mark (simplified inline SVG) -->
+    <svg width="23" height="9" viewBox="0 0 23 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="IBM">
+      <rect y="0" width="23" height="1.5" fill="#0f62fe"/>
+      <rect y="2.25" width="17" height="1.5" fill="#0f62fe"/>
+      <rect y="4.5" width="23" height="1.5" fill="#0f62fe"/>
+      <rect y="6.75" width="17" height="1.5" fill="#0f62fe"/>
+    </svg>
+    <span class="cds--header__name-prefix">IBM&nbsp;</span>Bob Partner Lab
+  </a>
+  <div class="header-tags">
+    <span class="header-tag blue">IBM Bob</span>
+    <span class="header-tag blue">IBM Code Engine</span>
+    <span class="header-tag">Python · FastAPI</span>
+    <span class="header-tag">watsonx Orchestrate</span>
+  </div>
+  <span class="header-duration">45 min</span>
+</header>
+
+<!-- ════ PAGE HEADER ════ -->
+<div class="page-header">
+  <p class="page-header__eyebrow">IBM TechXchange · Partner Hands-On Lab</p>
+  <h1><strong>Build and Deploy</strong> an AI-Powered<br>IT Ticket Classifier with IBM Bob</h1>
+  <p class="page-header__desc">
+    Use IBM Bob to understand a real application from a GitHub repo, wrap it in a production-ready API,
+    and deploy it live to IBM Code Engine — using the same workflow you'd follow on a client engagement.
+  </p>
+  <div class="cds--tag-group">
+    <span class="cds--tag">IBM Bob</span>
+    <span class="cds--tag">IBM Code Engine</span>
+    <span class="cds--tag">Python · FastAPI</span>
+    <span class="cds--tag">watsonx Orchestrate</span>
+    <span class="cds--tag">45 Minutes</span>
+  </div>
+</div>
+
+<!-- ════ CARBON TABS ════ -->
+<div class="cds--tabs" role="navigation" aria-label="Lab sections">
+  <ul class="cds--tabs__nav" role="tablist">
+    <li class="cds--tabs__nav-item" role="none">
+      <button class="cds--tabs__nav-link active" role="tab" aria-selected="true"  onclick="showTab('overview', this)">Overview</button>
+    </li>
+    <li class="cds--tabs__nav-item" role="none">
+      <button class="cds--tabs__nav-link" role="tab" aria-selected="false" onclick="showTab('track-a', this)">Track A — Hands-On Guide</button>
+    </li>
+    <li class="cds--tabs__nav-item" role="none">
+      <button class="cds--tabs__nav-link" role="tab" aria-selected="false" onclick="showTab('track-b', this)">Track B — Hands-On Guide</button>
+    </li>
+    <li class="cds--tabs__nav-item" role="none">
+      <button class="cds--tabs__nav-link" role="tab" aria-selected="false" onclick="showTab('reference', this)">Reference</button>
+    </li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB: OVERVIEW
+════════════════════════════════════════════ -->
+<div id="tab-overview" class="tab-pane active">
+<div class="cds--content">
+
+<div class="cds--row">
+<h2 class="section-heading">What You'll Take Away from This Lab</h2>
+  <p>This lab is built around a real use case — one that maps directly to conversations you're already having with clients. Every tool you use and every command you run is something you can repeat on a real engagement next week.</p>
+  <div class="cds--grid-3" style="margin-top:var(--s-05);">
+    <div class="story-tile s1">
+      <div class="story-num">01</div>
+      <h3>Accelerate your own delivery</h3>
+      <p>When you inherit a client's codebase, Bob reads it for you. You'll see how quickly Bob can orient you to an unfamiliar repo, explain business logic, and tell you exactly where to make changes — before you've written a single line of code.</p>
+    </div>
+    <div class="story-tile s2">
+      <div class="story-num">02</div>
+      <h3>Deliver faster for clients</h3>
+      <p>You'll take a Python module and go from source code to a live cloud endpoint in under 30 minutes — with Bob generating the API wrapper, Dockerfile, deploy configuration, and walking you through every step. That's the value proposition you'll bring to client engagements.</p>
+    </div>
+    <div class="story-tile s3">
+      <div class="story-num">03</div>
+      <h3>Show clients what's possible</h3>
+      <p>The application you deploy today is a working demo you can show any enterprise client. When they ask how you built and deployed it so fast, that's your Bob conversation — and a natural entry point to an IBM Bob license discussion.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
+<h2 class="section-heading">The Client Scenario</h2>
+  <div class="cds--inline-notification cds--inline-notification--info">
+    <span class="notif-icon">ℹ️</span>
+    <div class="notif-body">
+      <p class="notif-title">Setting the Scene</p>
+      <blockquote>
+        It's 11pm on a Friday. A security analyst at one of your financial services clients spots something suspicious in the logs — a phishing email that may have compromised two employee accounts. She types into the internal support chat:<br><br>
+        <em>"We received a phishing email from our own domain. Two employees may have clicked the link. Possible credential compromise."</em><br><br>
+        Today, that message sits in a queue until Monday morning. A Level-1 agent reads it, recognises it's urgent, and manually escalates it to the security team. By the time anyone acts, 60 hours have passed.<br><br>
+        <strong>With the application you're building today:</strong> that description is classified as a Security Incident at 96% confidence, routed to the SOC, assigned a ticket ID, and the team is notified — in under 3 seconds, at any hour.
+      </blockquote>
+    </div>
+  </div>
+
+  <h3>The Business Case — By the Numbers</h3>
+  <div class="cds--data-table-container">
+    <table class="cds--data-table">
+      <thead><tr><th>Metric</th><th>Current State (Manual)</th><th>With This Application</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td>Misrouting rate</td><td>30–40% of tickets misrouted on first assignment</td><td>Under 2%</td><td class="positive">87% fewer errors</td></tr>
+        <tr><td>Cost per misrouted ticket</td><td>$22+ in extra handling fees</td><td>Near zero</td><td class="positive">99% cost reduction</td></tr>
+        <tr><td>After-hours coverage</td><td>None</td><td>24 / 7</td><td class="positive">Always on</td></tr>
+        <tr><td>Resolution time improvement</td><td>Baseline</td><td>40–60% faster</td><td class="positive">Industry benchmark</td></tr>
+        <tr><td>Annual savings (mid-size org)</td><td colspan="2">—</td><td class="positive">$80K–$320K+</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-caption">Sources: HDI / Alhena AI (misrouting rate), Maven AGI 2026 benchmark ($22/ticket), eesel.ai / Unthread 2026 (resolution speed), Mizo.tech / DevRev 2026 (savings range).</p>
+</div>
+
+<div class="cds--row">
+<h2 class="section-heading">The Solution — End to End</h2>
+  <p>Here is the full picture of what this system looks like in production. The lab builds the middle layer — the classifier and API. The "next steps" sections (watsonx.ai and Orchestrate) show where the solution goes after today.</p>
+
+  <!-- End-to-end flow diagram -->
+  <div style="margin:var(--s-06) 0;overflow-x:auto;">
+    <div style="display:flex;align-items:stretch;gap:0;min-width:620px;">
+
+      <!-- Step 1: Employee -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="background:var(--cds-gray-10);border:1px solid var(--border-subtle);border-radius:4px;padding:var(--s-04) var(--s-03);width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:20px;margin-bottom:4px;">💬</div>
+          <div style="font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">Employee</div>
+          <div style="font-size:11px;color:var(--text-secondary);line-height:1.4;">Describes problem in plain English</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 4px;color:var(--cds-gray-50);font-size:18px;">→</div>
+
+      <!-- Step 2: Orchestrate -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cds-purple-70);margin-bottom:4px;">Next Step</div>
+        <div style="background:var(--cds-purple-10);border:1px solid var(--cds-purple-20);border-radius:4px;padding:var(--s-04) var(--s-03);width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:20px;margin-bottom:4px;">🤖</div>
+          <div style="font-size:12px;font-weight:600;color:var(--cds-purple-70);margin-bottom:4px;">watsonx Orchestrate</div>
+          <div style="font-size:11px;color:var(--text-secondary);line-height:1.4;">AI agent receives message, calls classifier API</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 4px;color:var(--cds-gray-50);font-size:18px;">→</div>
+
+      <!-- Step 3: API (built in lab) -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cds-blue-60);margin-bottom:4px;">Built in this lab</div>
+        <div style="background:var(--cds-blue-10);border:2px solid var(--cds-blue-60);border-radius:4px;padding:var(--s-04) var(--s-03);width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:20px;margin-bottom:4px;">⚡</div>
+          <div style="font-size:12px;font-weight:600;color:var(--cds-blue-60);margin-bottom:4px;">Classifier API</div>
+          <div style="font-size:11px;color:var(--text-secondary);line-height:1.4;"><code style="font-size:10px;">POST /classify</code> on IBM Code Engine — classifies, prioritises, routes</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 4px;color:var(--cds-gray-50);font-size:18px;">→</div>
+
+      <!-- Step 4: watsonx.ai (next step) -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cds-teal-60);margin-bottom:4px;">Next Step</div>
+        <div style="background:var(--cds-teal-10);border:1px solid var(--cds-teal-20);border-radius:4px;padding:var(--s-04) var(--s-03);width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:20px;margin-bottom:4px;">🧠</div>
+          <div style="font-size:12px;font-weight:600;color:var(--cds-teal-60);margin-bottom:4px;">IBM Granite / watsonx.ai</div>
+          <div style="font-size:11px;color:var(--text-secondary);line-height:1.4;">Replace keyword rules with an LLM for smarter, ambiguous input</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;padding:0 4px;color:var(--cds-gray-50);font-size:18px;">→</div>
+
+      <!-- Step 5: Downstream -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cds-gray-70);margin-bottom:4px;">Next Step</div>
+        <div style="background:var(--cds-gray-10);border:1px solid var(--border-subtle);border-radius:4px;padding:var(--s-04) var(--s-03);width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:20px;margin-bottom:4px;">🎫</div>
+          <div style="font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px;">ServiceNow / Slack</div>
+          <div style="font-size:11px;color:var(--text-secondary);line-height:1.4;">Ticket created, right team notified — in under 3 seconds</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Track callouts -->
+  <div class="cds--grid-2" style="margin-top:var(--s-05);">
+    <div style="background:var(--cds-teal-10);border:1px solid var(--cds-teal-20);border-left:3px solid var(--cds-teal-60);padding:var(--s-04) var(--s-05);">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cds-teal-60);margin-bottom:6px;">🟢 Track A — What you build</div>
+      <p style="font-size:13px;margin:0;">Clone the repo → understand the classification logic → generate <code>app.py</code> → test the live API locally. You leave with a working, locally-served endpoint.</p>
+    </div>
+    <div style="background:var(--cds-purple-10);border:1px solid var(--cds-purple-20);border-left:3px solid var(--cds-purple-70);padding:var(--s-04) var(--s-05);">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cds-purple-70);margin-bottom:6px;">🟣 Track B — What you build + deploy</div>
+      <p style="font-size:13px;margin:0;">Everything in Track A, plus: generate a Dockerfile → deploy to IBM Code Engine → get a live public URL → see how to wire it into a watsonx Orchestrate agent.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
+<h2 class="section-heading">Session Agenda — 45 Minutes</h2>
+  <p><strong>Both groups run in parallel throughout the entire session.</strong> Find your track — Track A or Track B — and follow only that guide. Use the tabs above to navigate to your step-by-step instructions.</p>
+  <div class="cds--grid-3" style="margin-top:var(--s-05);">
+    <div class="agenda-tile">
+      <div class="agenda-overline">0 – 15 min · Block 1</div>
+      <h3>Bob Tour &amp; First Look</h3>
+      <div class="cds--tag--blue">⚡ Groups running in parallel</div>
+      <p><strong>Track A:</strong> Bob UI tour — modes, MCP servers, set up workspace.<br><br><strong>Track B:</strong> Ask Bob to clone the repo, install deps, run the classifier, and explain the code — all via prompts.</p>
+    </div>
+    <div class="agenda-tile">
+      <div class="agenda-overline">15 – 30 min · Block 2</div>
+      <h3>Clone, Set Up &amp; Explore</h3>
+      <div class="cds--tag--blue">⚡ Groups running in parallel</div>
+      <p><strong>Track A:</strong> Ask Bob to clone, install, run, and explain the codebase.<br><br><strong>Track B:</strong> Ask Bob to generate <code>app.py</code>, start the API, and test all three sample tickets.</p>
+    </div>
+    <div class="agenda-tile">
+      <div class="agenda-overline">30 – 45 min · Block 3</div>
+      <h3>Build the API &amp; Deploy</h3>
+      <div class="cds--tag--blue">⚡ Groups running in parallel</div>
+      <p><strong>Track A:</strong> Ask Bob to generate <code>app.py</code>, start the server, and test the live endpoint.<br><br><strong>Track B:</strong> Authenticate with IBM Cloud via Bob, deploy to Code Engine, get a live URL.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
+<h2 class="section-heading">Choose Your Track</h2>
+  <p>Both groups run in parallel for all 45 minutes. Read your track carefully before the session starts — then open the matching tab above for your step-by-step guide.</p>
+  <div class="cds--grid-2" style="margin-top:var(--s-05);">
+    <div class="track-tile track-a">
+      <div class="track-overline">🟢 Track A — New to Bob</div>
+      <h3>You haven't used Bob before, or want a guided tour of the interface first</h3>
+      <p>You'll start with a walkthrough of the Bob UI — modes, MCP servers, workspaces — then move straight into using it on a real codebase. By the end you'll know how to orient yourself to any repo a client hands you.</p>
+      <div class="block-item"><div class="block-dot">B1</div><p>Open Bob. Tour the interface — modes, MCP servers, workspace setup.</p></div>
+      <div class="block-item"><div class="block-dot">B2</div><p>Ask Bob to clone the repo, install dependencies, run the classifier, and explain how it works.</p></div>
+      <div class="block-item"><div class="block-dot">B3</div><p>Ask Bob to generate <code>app.py</code> from the raw function, start the API, and test all three ticket scenarios.</p></div>
+    </div>
+    <div class="track-tile track-b">
+      <div class="track-overline">🟣 Track B — Seen Bob Before</div>
+      <h3>You've tried Bob at least once and don't need a UI tour — ready to build and deploy</h3>
+      <p>You'll skip the interface walkthrough and jump straight into running the application, understanding the API layer with Bob, and deploying a live endpoint to IBM Code Engine. You leave with a real URL you can demo to a client.</p>
+      <div class="block-item"><div class="block-dot">B1</div><p>Ask Bob to clone the repo, install dependencies, run the classifier, and explain the codebase — all via prompts.</p></div>
+      <div class="block-item"><div class="block-dot">B2</div><p>Ask Bob to generate <code>app.py</code>, start the API, and test all three ticket scenarios with curl.</p></div>
+      <div class="block-item"><div class="block-dot">B3</div><p>Authenticate with IBM Cloud via Bob, deploy to Code Engine, get a live URL, connect to Orchestrate.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
+<h2 class="section-heading">What's in the Repository</h2>
+  <p>Every file has a single, clear purpose. Bob will walk you through each one during the lab.</p>
+  <div class="file-tree">
+    <span class="ft-dir">support-ticket-lab/</span><br>
+    <span class="ft-file">├── ticket_classifier.py</span>&nbsp;&nbsp;&nbsp;<span class="ft-note">← Start here. All classification and routing logic. No external dependencies.</span><br>
+    <span class="ft-file">├── app.py</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-note">← <em>You generate this with Bob during the lab.</em> FastAPI wrapper with POST /classify and GET /health.</span><br>
+    <span class="ft-file">├── requirements.txt</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-note">← Three packages: fastapi, uvicorn, pydantic.</span><br>
+    <span class="ft-file">├── Dockerfile</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-note">← <em>You generate this with Bob during the lab.</em> Packages the app for IBM Code Engine.</span><br>
+    <span class="ft-dir">├── sample_tickets/</span><br>
+    <span class="ft-file">│&nbsp;&nbsp; ├── security_incident.json</span>&nbsp;&nbsp;<span class="ft-note">← CRITICAL: phishing attack</span><br>
+    <span class="ft-file">│&nbsp;&nbsp; ├── service_outage.json</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ft-note">← HIGH: portal offline, error 503</span><br>
+    <span class="ft-file">│&nbsp;&nbsp; └── billing_escalation.json</span>&nbsp;<span class="ft-note">← HIGH: billing dispute over $5,000</span><br>
+  </div>
+</div>
+
+</div><!-- /cds--content -->
+</div><!-- /tab-overview -->
+
+
+<!-- ════════════════════════════════════════════
+     TAB: TRACK A STEP-BY-STEP
+════════════════════════════════════════════ -->
+<div id="tab-track-a" class="tab-pane">
+<div class="cds--content">
+
+<div class="cds--inline-notification cds--inline-notification--success" style="margin-bottom:var(--s-07);">
+  <span class="notif-icon">🟢</span>
+  <div class="notif-body">
+    <p class="notif-title">Track A — New to Bob</p>
+    <p>This is your complete step-by-step guide. Work through each block in order. Every Bob prompt is integrated inline — just copy and paste it into Bob when you reach it.</p>
+  </div>
+</div>
+
+<!-- BLOCK 1 -->
+<div class="lab-block">
+  <div class="block-header">
+    <span class="block-time-pill">0 – 15 min</span>
+    <h3>Block 1 — Bob UI Tour &amp; First Look at the Repo</h3>
+  </div>
+  <div class="block-body">
+
+    <div class="lab-step">
+      <div class="step-num a">1</div>
+      <div class="step-content">
+        <h4>Open IBM Bob</h4>
+        <p>Launch Bob from your desktop or browser. You should land on the chat interface. If you see a mode selector in the bottom-left corner, you're in the right place.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob chat interface on first open</div>
+          <div class="sc-size">Recommended size: 1200 × 700px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">2</div>
+      <div class="step-content">
+        <h4>Explore Modes</h4>
+        <p>Click the mode selector (bottom-left). You'll see modes like <strong>Agent</strong>, <strong>Ask</strong>, <strong>Plan</strong>. For this lab you'll stay in <strong>Agent</strong> mode — it has full access to file tools and can read, write, and run code in your workspace.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Mode selector open, highlighting Agent mode</div>
+          <div class="sc-size">Recommended size: 600 × 400px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">3</div>
+      <div class="step-content">
+        <h4>Explore MCP Servers</h4>
+        <p>Open the MCP servers panel (look for the plug icon or Settings → MCP Servers). MCP servers give Bob access to external tools — IBM docs, Tavily web search, and more. For today's lab no additional MCP servers are required, but note where this panel lives for future use.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: MCP Servers panel showing connected servers</div>
+          <div class="sc-size">Recommended size: 800 × 500px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">4</div>
+      <div class="step-content">
+        <h4>Open the Lab Repo as Your Workspace</h4>
+        <p>The lab repository is at:</p>
+        <pre>https://github.ibm.com/adeline/techXchange-PD-bob-lab.git</pre>
+        <p>Ask Bob to clone it for you. Type this into the Bob chat:</p>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">→</div>
+          <div>
+            <div class="prompt-meta">Paste this into Bob</div>
+            <div class="prompt-text">"Please clone this repository for me: https://github.ibm.com/adeline/techXchange-PD-bob-lab.git — then open the support-ticket-lab folder as my workspace."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run the <code>git clone</code> command and open the folder. You should see the file tree appear in the left panel.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob chat showing clone command + file tree visible in left panel</div>
+          <div class="sc-size">Recommended size: 1200 × 700px</div>
+        </div>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">⚠️</span>
+          <div class="notif-body">
+            <p class="notif-title">If you need credentials for the IBM GitHub</p>
+            <p>The repo is on IBM's internal GitHub. You'll need to authenticate with your IBM w3id. If Bob can't clone it, use your terminal: <code>git clone https://github.ibm.com/adeline/techXchange-PD-bob-lab.git</code> then open the folder in Bob manually.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BLOCK 2 -->
+<div class="lab-block">
+  <div class="block-header">
+    <span class="block-time-pill">15 – 30 min</span>
+    <h3>Block 2 — Clone, Set Up &amp; Explore the Code</h3>
+  </div>
+  <div class="block-body">
+
+    <div class="lab-step">
+      <div class="step-num a">1</div>
+      <div class="step-content">
+        <h4>Clone the Repository with Bob</h4>
+        <p>Open Bob and type this prompt into the chat:</p>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">1</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Clone &amp; Open</div>
+            <div class="prompt-text">"Can you clone this repo on my desktop, open the support-ticket-lab folder as my workspace, and tell me what the application is about? https://github.ibm.com/adeline/techXchange-PD-bob-lab.git"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run <code>git clone</code>, open the folder as your workspace, and give you an overview of the app. You should see the file tree appear in the left panel.</p>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">⚠️</span>
+          <div class="notif-body">
+            <p class="notif-title">🔐 Can't clone? You need a GitHub Personal Access Token (PAT)</p>
+            <p>This repo is on IBM's internal GitHub (<code>github.ibm.com</code>). Git cloning requires a PAT — not a w3id password. Try these options in order:</p>
+            <p><strong>Option 1 — Ask Bob to generate a PAT and connect it:</strong></p>
+            <div class="cds--prompt-card" style="margin:8px 0 12px 0;">
+              <div class="prompt-badge" style="background:#fdd13a;color:#3c2f00;">?</div>
+              <div>
+                <div class="prompt-meta">Bob Prompt — PAT Setup</div>
+                <div class="prompt-text">"I can't clone from github.ibm.com — I think I need a Personal Access Token. Can you walk me through generating one and configuring git to use it?"</div>
+              </div>
+            </div>
+            <p>Bob will open <code>https://github.ibm.com/settings/tokens</code>, guide you through creating a token with <strong>repo</strong> scope, and run <code>git config</code> to store it. Once done, re-run the clone prompt above.</p>
+            <p><strong>Option 2 — Get the zip from the instructor:</strong> Ask the facilitator for the <code>techXchange-PD-bob-lab.zip</code> file. Then ask Bob:</p>
+            <div class="cds--prompt-card" style="margin:8px 0 0 0;">
+              <div class="prompt-badge" style="background:#fdd13a;color:#3c2f00;">?</div>
+              <div>
+                <div class="prompt-meta">Bob Prompt — Open from Zip</div>
+                <div class="prompt-text">"I have a zip file of the lab repo on my desktop called techXchange-PD-bob-lab.zip — can you unzip it and open the support-ticket-lab folder as my workspace?"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob chat showing clone + file tree visible in left panel</div>
+          <div class="sc-size">Recommended size: 1200 × 500px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">2</div>
+      <div class="step-content">
+        <h4>Install Dependencies &amp; Run the Classifier</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">2</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Install &amp; Run</div>
+            <div class="prompt-text">"Can you install the dependencies for this project and run ticket_classifier.py so I can see the output?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run <code>pip install -r requirements.txt</code> and <code>python ticket_classifier.py</code> in the terminal. You should see five test cases print — each with a classification, priority, and routing decision. If all five print without errors, your environment is ready.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob terminal showing all 5 test cases printing successfully</div>
+          <div class="sc-size">Recommended size: 1000 × 400px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">3</div>
+      <div class="step-content">
+        <h4>Understand the Classification Logic</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">3</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Core Logic</div>
+            <div class="prompt-text">"Walk me through how the classification logic works. What is the order of operations from the moment a ticket description comes in to when a result is returned?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will trace the data flow through <code>CLASSIFICATION_RULES</code> → <code>ROUTING_RULES</code> → <code>TicketResult</code>. Follow along in the file — you'll need this context in Block 3.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">4</div>
+      <div class="step-content">
+        <h4>See All the Routing Rules as a Table</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">4</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Routing Rules</div>
+            <div class="prompt-text">"Show me every ticket type in this application — the keywords that trigger it, the priority it gets, which team it's routed to, and the SLA. Format it as a table."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will return a clean table. This is what you'd show a client to say: <em>"Here are all the rules. Tell me what's wrong and we'll update them."</em></p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob's routing rules table response</div>
+          <div class="sc-size">Recommended size: 1000 × 400px</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BLOCK 3 -->
+<div class="lab-block">
+  <div class="block-header">
+    <span class="block-time-pill">30 – 45 min</span>
+    <h3>Block 3 — Build the API with Bob</h3>
+  </div>
+  <div class="block-body">
+
+    <div class="lab-step">
+      <div class="step-num a">1</div>
+      <div class="step-content">
+        <h4>Ask Bob to Wrap the Function in a FastAPI Endpoint</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">5</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Generate the API</div>
+            <div class="prompt-text">"Can you wrap the classify_ticket function in ticket_classifier.py in a FastAPI app? I need a POST /classify endpoint and a GET /health endpoint. Save it as app.py."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will generate <code>app.py</code> from scratch and save it to your workspace. Open the file and read through it — notice how it imports directly from <code>ticket_classifier.py</code> and reuses the same Pydantic models.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob generating app.py — file appearing in the left panel</div>
+          <div class="sc-size">Recommended size: 1400 × 700px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">2</div>
+      <div class="step-content">
+        <h4>Start the API and Open the Docs</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">6</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Run It</div>
+            <div class="prompt-text">"Can you start the FastAPI server from app.py and open the API docs in my browser?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run <code>python app.py</code> and open <code>http://localhost:8080/docs</code>. FastAPI auto-generates interactive API docs — this is what you'd show a client to demonstrate the endpoint before deployment.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: FastAPI /docs page open in browser showing POST /classify endpoint</div>
+          <div class="sc-size">Recommended size: 1200 × 600px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num a">3</div>
+      <div class="step-content">
+        <h4>Test the Live Endpoint</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">7</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Test All Scenarios</div>
+            <div class="prompt-text">"Give me curl commands to test the /classify endpoint locally using each of the three sample_tickets JSON files."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will generate three curl commands. Run each one and verify the results — you should see <code>CRITICAL</code> for the security incident, <code>HIGH</code> for the outage, and <code>HIGH</code> for the billing escalation.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Terminal showing curl response with CRITICAL Security Incident classification</div>
+          <div class="sc-size">Recommended size: 1000 × 400px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cds--inline-notification cds--inline-notification--success">
+      <span class="notif-icon">✅</span>
+      <div class="notif-body">
+        <p class="notif-title">✅ Track A Complete</p>
+        <p>You started with a raw Python function and — using only Bob prompts — cloned the repo, understood the logic, generated a production-ready API, and tested it live. This is the full workflow you'd use to onboard to a client codebase and ship something new in a single session.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /cds--content -->
+</div><!-- /tab-track-a -->
+
+
+<!-- ════════════════════════════════════════════
+     TAB: TRACK B STEP-BY-STEP
+════════════════════════════════════════════ -->
+<div id="tab-track-b" class="tab-pane">
+<div class="cds--content">
+
+<div class="cds--inline-notification cds--inline-notification--info">
+  <span class="notif-icon">🟣</span>
+  <div class="notif-body">
+    <p class="notif-title">Track B — Seen Bob Before</p>
+    <p>This is your complete step-by-step guide. Work through each block in order. Bob prompts are integrated inline — paste them into Bob when you reach them. You'll leave with a live public URL on IBM Cloud.</p>
+  </div>
+</div>
+
+<!-- BLOCK 1 -->
+<div class="lab-block">
+  <div class="block-header">
+    <span class="block-time-pill">0 – 15 min</span>
+    <h3>Block 1 — Clone, Set Up &amp; Explore</h3>
+  </div>
+  <div class="block-body">
+
+    <div class="lab-step">
+      <div class="step-num b">1</div>
+      <div class="step-content">
+        <h4>Clone the Repository with Bob</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">1</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Clone &amp; Open</div>
+            <div class="prompt-text">"Can you clone this repo on my desktop, open the support-ticket-lab folder as my workspace, and tell me what the application is about? https://github.ibm.com/adeline/techXchange-PD-bob-lab.git"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run <code>git clone</code>, open the folder as your workspace, and give you an overview of the app. You should see the file tree appear in the left panel.</p>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">⚠️</span>
+          <div class="notif-body">
+            <p class="notif-title">🔐 Can't clone? You need a GitHub Personal Access Token (PAT)</p>
+            <p>This repo is on IBM's internal GitHub (<code>github.ibm.com</code>). Git cloning requires a PAT — not your w3id password. Try these options in order:</p>
+            <p><strong>Option 1 — Ask Bob to generate a PAT and connect it:</strong></p>
+            <div class="cds--prompt-card" style="margin:8px 0 12px 0;">
+              <div class="prompt-badge" style="background:#fdd13a;color:#3c2f00;">?</div>
+              <div>
+                <div class="prompt-meta">Bob Prompt — PAT Setup</div>
+                <div class="prompt-text">"I can't clone from github.ibm.com — I think I need a Personal Access Token. Can you walk me through generating one and configuring git to use it?"</div>
+              </div>
+            </div>
+            <p>Bob will open <code>https://github.ibm.com/settings/tokens</code>, guide you through creating a token with <strong>repo</strong> scope, and run <code>git config</code> to store it. Once done, re-run the clone prompt above.</p>
+            <p><strong>Option 2 — Get the zip from the instructor:</strong> Ask the facilitator for the <code>techXchange-PD-bob-lab.zip</code> file. Then ask Bob:</p>
+            <div class="cds--prompt-card" style="margin:8px 0 0 0;">
+              <div class="prompt-badge" style="background:#fdd13a;color:#3c2f00;">?</div>
+              <div>
+                <div class="prompt-meta">Bob Prompt — Open from Zip</div>
+                <div class="prompt-text">"I have a zip file of the lab repo on my desktop called techXchange-PD-bob-lab.zip — can you unzip it and open the support-ticket-lab folder as my workspace?"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob chat showing clone + file tree visible in left panel</div>
+          <div class="sc-size">Recommended size: 1200 × 500px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">2</div>
+      <div class="step-content">
+        <h4>Install Dependencies &amp; Run the Classifier</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">2</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Install &amp; Run</div>
+            <div class="prompt-text">"Can you install the dependencies for this project and run ticket_classifier.py so I can see the output?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run <code>pip install -r requirements.txt</code> and <code>python ticket_classifier.py</code> in the terminal. You should see five test cases print — each with a classification, priority, and routing decision. If all five print without errors, your environment is ready.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob terminal showing all 5 test cases printing successfully</div>
+          <div class="sc-size">Recommended size: 1000 × 400px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">3</div>
+      <div class="step-content">
+        <h4>Get Bob's Read on the Codebase</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">3</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — First Look</div>
+            <div class="prompt-text">"Walk me through how the classification logic works. What is the order of operations from the moment a ticket description comes in to when a result is returned?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">This is the same kind of codebase orientation question you'd use on a client engagement. Bob will trace the data flow through <code>CLASSIFICATION_RULES</code> → <code>ROUTING_RULES</code> → <code>TicketResult</code>. Read it — you'll need this context in Block 2.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BLOCK 2 -->
+<div class="lab-block">
+  <div class="block-header">
+    <span class="block-time-pill">15 – 30 min</span>
+    <h3>Block 2 — Build the API with Bob</h3>
+  </div>
+  <div class="block-body">
+
+    <div class="lab-step">
+      <div class="step-num b">1</div>
+      <div class="step-content">
+        <h4>Ask Bob to Wrap the Function in a FastAPI Endpoint</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">4</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Generate the API</div>
+            <div class="prompt-text">"Can you wrap the classify_ticket function in ticket_classifier.py in a FastAPI app? I need a POST /classify endpoint and a GET /health endpoint. Save it as app.py."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will generate <code>app.py</code> from scratch and save it to your workspace. Open the file and read through it — notice how it imports directly from <code>ticket_classifier.py</code> and reuses the same Pydantic models.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Bob generating app.py — file appearing in the left panel</div>
+          <div class="sc-size">Recommended size: 1400 × 700px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">2</div>
+      <div class="step-content">
+        <h4>Start the API and Open the Docs</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">5</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Run It</div>
+            <div class="prompt-text">"Can you start the FastAPI server from app.py and open the API docs in my browser?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will run <code>python app.py</code> and open <code>http://localhost:8080/docs</code>. FastAPI auto-generates interactive API docs — this is what you'd show a client to demonstrate the endpoint before deployment.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: FastAPI /docs page open in browser showing POST /classify endpoint</div>
+          <div class="sc-size">Recommended size: 1200 × 600px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">3</div>
+      <div class="step-content">
+        <h4>Test All Three Scenarios</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">6</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Test All Scenarios</div>
+            <div class="prompt-text">"Give me curl commands to test the /classify endpoint locally using each of the three sample_tickets JSON files."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will generate three curl commands. Run each one and verify the results — you should see <code>CRITICAL</code> for the security incident, <code>HIGH</code> for the outage, and <code>HIGH</code> for the billing escalation.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Terminal showing curl response with CRITICAL Security Incident classification</div>
+          <div class="sc-size">Recommended size: 1000 × 400px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">4</div>
+      <div class="step-content">
+        <h4>Check Error Handling</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">7</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Error Handling</div>
+            <div class="prompt-text">"What happens if a client POSTs to /classify without including the 'description' field? Does the API fail gracefully? What would the HTTP response look like?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Then verify it yourself — remove the <code>"description"</code> field from your curl command and see the <code>422</code> response. This is a useful thing to show clients who ask about API robustness.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BLOCK 3 -->
+<div class="lab-block">
+  <div class="block-header">
+    <span class="block-time-pill">30 – 45 min</span>
+    <h3>Block 3 — Deploy to IBM Code Engine</h3>
+  </div>
+  <div class="block-body">
+
+    <div class="lab-step">
+      <div class="step-num b">1</div>
+      <div class="step-content">
+        <h4>Ask Bob How to Deploy</h4>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">8</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Deploy</div>
+            <div class="prompt-text">"I want to deploy this API endpoint to Code Engine now, how do I do that — walk me through step by step."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will look at what you have (<code>app.py</code>, <code>requirements.txt</code>), generate a Dockerfile, walk you through IBM Cloud authentication, and produce the exact deploy commands. Follow each step as Bob presents it — read before confirming.</p>
+        <div class="cred-box">
+          <div class="cred-title">🔑 Lab Credentials — IBM Cloud</div>
+          <table>
+            <thead><tr><th>Field</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Login method</td><td>SSO — use your IBM w3id</td></tr>
+              <tr><td>Resource group</td><td>Default</td></tr>
+              <tr><td>Code Engine project</td><td>techxchange-lab</td></tr>
+              <tr><td>Region</td><td>us-south (Dallas)</td></tr>
+              <tr><td>Container registry namespace</td><td>techxchange</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">⚠️</span>
+          <div class="notif-body">
+            <p class="notif-title">If Bob can't select the Code Engine project</p>
+            <p>The project may not exist yet. Tell Bob: <em>"The project doesn't exist yet — can you create it first?"</em> or ask the instructor.</p>
+          </div>
+        </div>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Terminal showing Code Engine build logs and "Successfully deployed" message</div>
+          <div class="sc-size">Recommended size: 1000 × 500px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">2</div>
+      <div class="step-content">
+        <h4>Get Your Live URL &amp; Test It</h4>
+        <p>Once Bob confirms the deployment is complete, ask Bob to retrieve your live URL and test the endpoint:</p>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">9</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — After Deployment</div>
+            <div class="prompt-text">"My application is deployed on Code Engine and I have a live URL. How do I test it?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will retrieve the URL and run a live test against <code>/classify</code>.</p>
+        <div class="screenshot-placeholder">
+          <div class="sc-icon">📸</div>
+          <div class="sc-label">Screenshot: Browser showing live /docs page on Code Engine URL</div>
+          <div class="sc-size">Recommended size: 1200 × 600px</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <div class="step-num b">3</div>
+      <div class="step-content">
+        <h4>Optional — Generate a watsonx Orchestrate Agent</h4>
+        <p>If you finish early or want to see the full picture, ask Bob to generate an Orchestrate agent definition that calls your live endpoint as a tool. This is the piece that lets an employee describe their problem in plain English and have the ticket classified automatically — without ever filling out a form.</p>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">10</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Optional · Orchestrate Agent</div>
+            <div class="prompt-text">"My ticket classifier API is live at [your Code Engine URL]. Can you generate a watsonx Orchestrate agent YAML that registers POST /classify as an HTTP tool, so an agent can call it when an employee describes a support issue?"</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Bob will generate a self-contained agent YAML with the HTTP tool definition pointing at your endpoint. You don't need an Orchestrate instance to generate or review the file — it's a useful artifact to bring to a client conversation and a natural jumping-off point for the next engagement.</p>
+        <div class="cds--inline-notification cds--inline-notification--info">
+          <span class="notif-icon">ℹ️</span>
+          <div class="notif-body">
+            <p class="notif-title">This is a next-step, not a lab requirement</p>
+            <p>Importing the YAML into a live Orchestrate instance requires a separate watsonx Orchestrate environment. The value here is generating the file and understanding the wiring — the Reference tab explains what a full production deployment looks like.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cds--inline-notification cds--inline-notification--success">
+      <span class="notif-icon">✅</span>
+      <div class="notif-body">
+        <p class="notif-title">✅ Track B Complete</p>
+        <p>You have a live, public API endpoint running on IBM Cloud that classifies IT support tickets in under 1 second. Your URL is the proof point: <em>"This is what we built in 45 minutes. Connecting it to your ServiceNow instance and Orchestrate agent is the next conversation."</em></p>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+</div><!-- /cds--content -->
+</div><!-- /tab-track-b -->
+
+
+<!-- ════════════════════════════════════════════
+     TAB: REFERENCE
+════════════════════════════════════════════ -->
+<div id="tab-reference" class="tab-pane">
+<div class="cds--content">
+
+<div class="cds--row">
+<h2 class="section-heading">Sample API Response</h2>
+  <p>Every call to <code>POST /classify</code> returns a structured JSON object:</p>
+  <pre>{
+  "ticket_id":      "TKT-47823",
+  "ticket_type":    "Service Outage",
+  "priority":       "HIGH",
+  "confidence":     0.97,
+  "assigned_team":  "Site Reliability Engineering (SRE)",
+  "sla_hours":      4,
+  "extracted_details": {
+    "submitted_by":     "DevOps On-Call",
+    "affected_systems": ["PORTAL"],
+    "error_code":       "503"
+  },
+  "summary": "🟠 [HIGH] Service Outage — TKT-47823 | SRE | SLA: 4h | 97% confidence"
+}</pre>
+  <div class="cds--inline-notification cds--inline-notification--info">
+  <span class="notif-icon">ℹ️</span>
+  <div class="notif-body">
+    <p class="notif-title">Note for Client Conversations</p>
+    <p>The API returns the <strong>routing decision</strong> — it does not yet write to ServiceNow or send a Slack message. That's intentional: the lab runs with zero external credentials. The integrations that make those downstream actions happen are what you scope in the engagement that follows the demo. The pitch: <em>"We've built and deployed the decision engine. Connecting it to your systems is the next conversation."</em></p>
+  </div>
+</div>
+</div>
+
+<div class="cds--row">
+  <h2 class="section-heading">Where to Take This Next</h2>
+  <p>You've built a working, deployed classifier. These three extensions turn it into a production-grade service — and each one represents a natural scope of work to bring back to a client. Bob can generate the code for all three.</p>
+  <div class="cds--grid-3">
+    <div class="ext-tile">
+      <div class="ext-num">01</div>
+      <h3>Upgrade to IBM watsonx.ai Classification</h3>
+      <p>Replace the keyword matching in <code>ticket_classifier.py</code> with a call to IBM Granite. The model reads the description and returns the classification — far more accurate on ambiguous or conversational inputs. The API interface doesn't change at all.</p>
+      <p style="margin-top:10px;"><strong>Ask Bob:</strong><br><em>"Replace the keyword classification logic in ticket_classifier.py with an IBM watsonx.ai Granite model API call. Keep the same TicketResult output format."</em></p>
+      <span class="cds--tag--difficulty diff-easy">Easy — one function, one watsonx.ai API key</span>
+    </div>
+    <div class="ext-tile">
+      <div class="ext-num">02</div>
+      <h3>Route to ServiceNow, Jira, or Slack</h3>
+      <p>After classification, add a <code>requests.post()</code> call to create a real ticket in the client's existing system. CRITICAL tickets go directly to a Slack or Teams channel. The ticket ID returned becomes the actual ServiceNow or Jira number.</p>
+      <p style="margin-top:10px;"><strong>Ask Bob:</strong><br><em>"After classification, add a Slack webhook notification for CRITICAL tickets and a ServiceNow REST API call to create the ticket for all other priorities."</em></p>
+      <span class="cds--tag--difficulty diff-med">Medium — one OAuth token per downstream system</span>
+    </div>
+    <div class="ext-tile">
+      <div class="ext-num">03</div>
+      <h3>Connect to watsonx Orchestrate</h3>
+      <p>Register your deployed Code Engine URL as an HTTP tool in a watsonx Orchestrate agent. When an employee describes a problem to the Orchestrate agent, it calls your endpoint automatically and confirms the ticket and SLA in the same conversation.</p>
+      <p style="margin-top:10px;"><strong>Ask Bob:</strong><br><em>"My ticket classifier is live at [your Code Engine URL]. Show me how to register it as an HTTP tool in a watsonx Orchestrate agent YAML."</em></p>
+      <span class="cds--tag--difficulty diff-adv">Advanced — requires a watsonx Orchestrate instance</span>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
+  <h2 class="section-heading">The Full Architecture</h2>
+  <p>Here is the end-to-end system you can describe and demo to any enterprise client after today:</p>
+  <pre class="light">  Employee describes their problem in plain English
+            ↓
+  watsonx Orchestrate agent receives the message
+            ↓
+  Agent calls POST /classify on your Code Engine endpoint
+            ↓
+  ticket_classifier.py runs in under 1 second:
+    • Classifies issue type with confidence score
+    • Extracts systems, amounts, and error codes from the text
+    • Applies routing rules → team, priority, SLA
+            ↓
+  Returns structured JSON with ticket ID, team, SLA, next steps
+            ↓
+  [Extension 01] IBM Granite makes the classification smarter
+  [Extension 02] ServiceNow / Jira ticket created · Slack alert sent
+  [Extension 03] Orchestrate agent confirms everything in the conversation
+            ↓
+  Employee has a ticket number and SLA in under 3 seconds
+  The right team has it before the employee finishes reading the confirmation</pre>
+
+  <div class="cds--inline-notification cds--inline-notification--info">
+  <span class="notif-icon">ℹ️</span>
+  <div class="notif-body">
+    <p class="notif-title">How to Position This in a Client Conversation</p>
+    <blockquote>
+      "We took your existing triage logic — the same rules your Level-1 team uses today — put it behind a secure API on IBM Cloud, and connected it to an AI agent your employees can talk to in plain English. No forms. No queues. No waiting until Monday morning. The right team has the ticket in under 3 seconds, around the clock.<br><br>
+      The IBM Bob tool your developers have been asking about? Everything you saw us build today — we did it in one afternoon."
+    </blockquote>
+  </div>
+</div>
+</div>
+
+<div class="cds--row">
+  <h2 class="section-heading">All Bob Prompts — Quick Reference</h2>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+
+    <!-- ── Track A · Block 1 ───────────────────────── -->
+    <p style="color:var(--text-secondary);font-size:13px;margin:0 0 4px 0;">
+      <strong>Track A · Block 1 — Bob UI Tour</strong>
+    </p>
+    <div style="background:var(--layer-02);border:1px solid var(--border-subtle);border-radius:4px;padding:12px 14px;font-size:13px;color:var(--text-secondary);">
+      No prompts in this block — participants explore the Bob interface guided by the facilitator. The prompts begin in Block 2.
+    </div>
+
+    <!-- ── Block 2 (Track A) = Block 1 (Track B) ─── -->
+    <p style="color:var(--text-secondary);font-size:13px;margin:14px 0 4px 0;">
+      <strong>Track A · Block 2 &nbsp;/&nbsp; Track B · Block 1 — Clone, Explore &amp; Understand</strong>
+    </p>
+    <div class="cds--prompt-card"><div class="prompt-badge">1</div><div><div class="prompt-meta">Clone &amp; Open</div><div class="prompt-text">"Can you clone this repo on my desktop, open the support-ticket-lab folder as my workspace, and tell me what the application is about? https://github.ibm.com/adeline/techXchange-PD-bob-lab.git"</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">2</div><div><div class="prompt-meta">Install &amp; Run</div><div class="prompt-text">"Can you install the dependencies for this project and run ticket_classifier.py so I can see the output?"</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">3</div><div><div class="prompt-meta">Core Logic</div><div class="prompt-text">"Walk me through how the classification logic works. What is the order of operations from the moment a ticket description comes in to when a result is returned?"</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">4</div><div><div class="prompt-meta">Routing Rules</div><div class="prompt-text">"Show me every ticket type in this application — the keywords that trigger it, the priority it gets, which team it's routed to, and the SLA. Format it as a table."</div></div></div>
+
+    <!-- ── Block 3 (Track A) = Block 2 (Track B) ─── -->
+    <p style="color:var(--text-secondary);font-size:13px;margin:14px 0 4px 0;">
+      <strong>Track A · Block 3 &nbsp;/&nbsp; Track B · Block 2 — Build the API with Bob</strong>
+    </p>
+    <div class="cds--prompt-card"><div class="prompt-badge">5</div><div><div class="prompt-meta">Generate the API</div><div class="prompt-text">"Can you wrap the classify_ticket function in ticket_classifier.py in a FastAPI app? I need a POST /classify endpoint and a GET /health endpoint. Save it as app.py."</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">6</div><div><div class="prompt-meta">Run It</div><div class="prompt-text">"Can you start the FastAPI server from app.py and open the API docs in my browser?"</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">7</div><div><div class="prompt-meta">Test All Scenarios</div><div class="prompt-text">"Give me curl commands to test the /classify endpoint locally using each of the three sample_tickets JSON files."</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">8</div><div><div class="prompt-meta">Error Handling</div><div class="prompt-text">"What happens if a client POSTs to /classify without including the 'description' field? Does the API fail gracefully? What would the HTTP response look like?"</div></div></div>
+
+    <!-- ── Track B · Block 3 ───────────────────────── -->
+    <p style="color:var(--text-secondary);font-size:13px;margin:14px 0 4px 0;">
+      <strong>Track B · Block 3 — Deploy to IBM Code Engine</strong>
+    </p>
+    <div class="cds--prompt-card"><div class="prompt-badge">9</div><div><div class="prompt-meta">Deploy</div><div class="prompt-text">"I want to deploy this API endpoint to Code Engine now, how do I do that — walk me through step by step."</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">10</div><div><div class="prompt-meta">After Deployment</div><div class="prompt-text">"My application is deployed on Code Engine and I have a live URL. How do I test it?"</div></div></div>
+    <div class="cds--prompt-card" style="border-left-color:var(--cds-gray-50);"><div class="prompt-badge" style="background:var(--cds-gray-20);color:var(--cds-gray-70);">★</div><div><div class="prompt-meta">Optional · Orchestrate Agent</div><div class="prompt-text">"My ticket classifier API is live at [your Code Engine URL]. Can you generate a watsonx Orchestrate agent YAML that registers POST /classify as an HTTP tool, so an agent can call it when an employee describes a support issue?"</div></div></div>
+
+  </div>
+</div><!-- /cds--row (last) -->
+
+</div><!-- /cds--content -->
+</div><!-- /tab-reference -->
+
+<footer class="cds--footer" role="contentinfo">
+  <svg width="23" height="9" viewBox="0 0 23 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="IBM" class="cds--footer__logo">
+    <rect y="0" width="23" height="1.5" fill="#0f62fe"/>
+    <rect y="2.25" width="17" height="1.5" fill="#0f62fe"/>
+    <rect y="4.5" width="23" height="1.5" fill="#0f62fe"/>
+    <rect y="6.75" width="17" height="1.5" fill="#0f62fe"/>
+  </svg>
+  <span class="cds--footer__text">Made with <strong style="color:var(--cds-gray-30);">IBM Bob</strong> &nbsp;·&nbsp; IBM TechXchange Partner Lab &nbsp;·&nbsp; 2026</span>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cds--tabs__nav-link').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

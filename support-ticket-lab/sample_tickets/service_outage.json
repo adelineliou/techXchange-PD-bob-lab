@@ -1,0 +1,16 @@
+{
+  "description": "The customer portal and API have been completely offline since 9:15 AM. All 400 users are locked out. Error 503 on every endpoint. Revenue impact is approximately $50,000 per hour.",
+  "submitted_by": "DevOps On-Call",
+  "expected": {
+    "ticket_type": "Service Outage",
+    "priority": "HIGH",
+    "assigned_team": "Site Reliability Engineering (SRE)",
+    "sla_hours": 4,
+    "confidence": 0.97,
+    "extracted": {
+      "affected_systems": ["PORTAL", "API"],
+      "error_code": "503",
+      "amount_mentioned": "$50,000.00"
+    }
+  }
+}
