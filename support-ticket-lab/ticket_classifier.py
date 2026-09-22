@@ -23,6 +23,7 @@ Extension ideas (build-on-your-own after the lab):
   - Register as a tool in watsonx Orchestrate so an agent calls this endpoint
 """
 
+from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from typing import Optional
 import re
@@ -195,6 +196,15 @@ def classify_ticket(request: TicketRequest) -> TicketResult:
         next_steps=next_steps,
         summary=summary,
     )
+
+
+# ── FastAPI app ───────────────────────────────────────────────────────────────
+
+app = FastAPI(title="Support Ticket Classifier")
+
+@app.post("/classify", response_model=TicketResult)
+def classify(request: TicketRequest):
+    return classify_ticket(request)
 
 
 # ── Local test runner ─────────────────────────────────────────────────────────

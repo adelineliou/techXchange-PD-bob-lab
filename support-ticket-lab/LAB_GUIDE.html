@@ -581,6 +581,11 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
   </div>
 </div>
 
+<div class="cds--row" style="text-align:center;padding:var(--s-06) 0 var(--s-04);">
+  <p style="font-size:14px;color:var(--text-secondary);">Before you dive in — or after you're done — we'd love to hear from you.</p>
+  <a href="https://wkf.ms/4dy45ad" target="_blank" style="display:inline-block;margin-top:var(--s-03);padding:10px 24px;background:var(--cds-blue-60);color:#fff;font-size:14px;font-weight:600;border-radius:4px;text-decoration:none;">📋 Share your feedback</a>
+</div>
+
 </div><!-- /cds--content -->
 </div><!-- /tab-overview -->
 
@@ -613,7 +618,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
       <div class="step-content">
         <h4>Open IBM Bob</h4>
         <p>Launch Bob from your desktop or browser. You should land on the chat interface. If you see a mode selector in the bottom-left corner and a chat input, you're in the right place.</p>
-        <img src="../bob1.1.png" alt="Bob chat interface on first open" class="sc-img" style="max-width:700px;" />
+        <img src="./lab-screenshots/bob1.1.png" alt="Bob chat interface on first open" class="sc-img" style="max-width:700px;" />
         <p class="sc-caption">Bob chat interface — the starting point for the whole lab</p>
       </div>
     </div>
@@ -639,7 +644,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p>For this lab, stay in <strong>Agent</strong> mode throughout.</p>
-        <img src="../bob1.2.png" alt="Mode selector showing Agent, Ask, Plan options" class="sc-img" style="max-width:320px;" />
+        <img src="./lab-screenshots/bob1.2.png" alt="Mode selector showing Agent, Ask, Plan options" class="sc-img" style="max-width:320px;" />
         <p class="sc-caption">Mode selector — use Agent mode for this lab</p>
       </div>
     </div>
@@ -654,7 +659,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           <li><strong>Team selection</strong> — Bob can be connected to your IBM team or organization. Make sure you're on the right team.</li>
           <li><strong>Bob Coins</strong> — Bob uses a credit system called Bob Coins. Each interaction costs coins. You can see your balance and usage here. Don't worry — you have plenty for this lab.</li>
         </ul>
-        <img src="../bob1.3.png" alt="Bob settings panel showing team selection and Bob Coins" class="sc-img" style="max-width:700px;" />
+        <img src="./lab-screenshots/bob1.3.png" alt="Bob settings panel showing team selection and Bob Coins" class="sc-img" style="max-width:700px;" />
         <p class="sc-caption">Bob settings — team selection and Bob Coins usage</p>
       </div>
     </div>
@@ -690,10 +695,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <div class="sc-row">
-          <img src="../bob1.41.png" alt="Bob with workspace folder open showing file tree" class="sc-img" />
-          <img src="../bob1.42.png" alt="Bob file explorer showing folder structure" class="sc-img" />
+          <img src="./lab-screenshots/bob1.41.png" alt="Bob with workspace folder open showing file tree" class="sc-img" />
+          <img src="./lab-screenshots/bob1.42.png" alt="Bob file explorer showing folder structure" class="sc-img" />
         </div>
-        <img src="../bob1.43.png" alt="Bob workspace set showing support-ticket-lab files" class="sc-img" style="max-width:420px;" />
+        <img src="./lab-screenshots/bob1.43.png" alt="Bob workspace set showing support-ticket-lab files" class="sc-img" style="max-width:420px;" />
         <p class="sc-caption">Bob with the lab workspace open — file tree visible in the left panel</p>
       </div>
     </div>
@@ -723,6 +728,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will run <code>git clone</code>, open the folder as your workspace, and give you an overview of the app. You should see the file tree appear in the left panel.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This is the same first move you'd make on a client engagement — hand Bob a repo URL and ask it to orient you. No reading through files manually, no asking a colleague to walk you through it.</em></p>
         <div class="cds--inline-notification cds--inline-notification--warning">
           <span class="notif-icon">⚠️</span>
           <div class="notif-body">
@@ -745,10 +751,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <div class="sc-row">
-          <img src="../bob2.11.png" alt="Bob terminal running git clone command" class="sc-img" />
-          <img src="../bob2.12.png" alt="Bob file tree visible after clone" class="sc-img" />
+          <img src="./lab-screenshots/bob2.11.png" alt="Bob terminal running git clone command" class="sc-img" />
+          <img src="./lab-screenshots/bob2.12.png" alt="Bob file tree visible after clone" class="sc-img" />
         </div>
-        <img src="../bob 2.13.png" alt="Bob chat showing clone result and workspace open" class="sc-img" />
+        <img src="./lab-screenshots/bob 2.13.png" alt="Bob chat showing clone result and workspace open" class="sc-img" />
         <p class="sc-caption">Bob cloning the repo and showing the file tree in the left panel</p>
       </div>
     </div>
@@ -766,9 +772,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will run <code>pip install -r requirements.txt</code> and <code>python ticket_classifier.py</code> in the terminal. You should see five test cases print — each with a classification, priority, and routing decision. If all five print without errors, your environment is ready.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Think of this as a client handing you their codebase on day one of an engagement. Bob gets you running and oriented in minutes instead of hours.</em></p>
         <div class="sc-row">
-          <img src="../bob2.21.png" alt="Bob running pip install in terminal" class="sc-img" />
-          <img src="../bob2.22.png" alt="Bob terminal showing 5 test cases printing successfully" class="sc-img" />
+          <img src="./lab-screenshots/bob2.21.png" alt="Bob running pip install in terminal" class="sc-img" />
+          <img src="./lab-screenshots/bob2.22.png" alt="Bob terminal showing 5 test cases printing successfully" class="sc-img" />
         </div>
         <p class="sc-caption">Bob installing dependencies and running the classifier — all 5 test cases should print</p>
       </div>
@@ -787,6 +794,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will trace the data flow through <code>CLASSIFICATION_RULES</code> → <code>ROUTING_RULES</code> → <code>TicketResult</code>, and flag any issues it finds. Follow along in the file — you'll need this context in Block 3.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>The classification here is keyword-based. Down the line, you could ask Bob to replace this with any AI model or inference service — same output format, much smarter on ambiguous inputs.</em></p>
       </div>
     </div>
 
@@ -802,7 +810,8 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
             <div class="prompt-text">"Show me every ticket type in this application — the keywords that trigger it, the priority it gets, which team it's routed to, and the SLA. Format it as a table."</div>
           </div>
         </div>
-        <p style="margin-top:10px;">Bob will return a clean table. This is what you'd show a client to say: <em>"Here are all the rules. Tell me what's wrong and we'll update them."</em></p>
+        <p style="margin-top:10px;">Bob will return a clean table. This is what you'd show a client to say: <em>"Here are all the rules. Tell me what's wrong and we'll update them."</em> This is a real PoC moment — you're reading a codebase you've never seen and already producing client-ready documentation from it.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>If a client wanted to add a new ticket category or change an SLA, you could describe the change to Bob in plain English and have the updated code in seconds.</em></p>
       </div>
     </div>
 
@@ -829,7 +838,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
             <div class="prompt-text">"How can I integrate this classification function in a support chat assistant as a tool?"</div>
           </div>
         </div>
-        <p style="margin-top:10px;">Bob will explain how to expose the <code>classify_ticket</code> function as an API endpoint that an AI assistant can call as a tool. If Bob doesn't proactively generate the code, follow up with:</p>
+        <p style="margin-top:10px;">Bob will explain how to expose the <code>classify_ticket</code> function as an API endpoint that an AI assistant can call as a tool. Once this is live on Code Engine, it becomes the foundation for connecting to ServiceNow, Slack, or a watsonx Orchestrate agent — Bob can help with all of those too. If Bob doesn't proactively generate the code, follow up with:</p>
         <div class="cds--prompt-card">
           <div class="prompt-badge">5b</div>
           <div>
@@ -838,9 +847,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will generate <code>app.py</code> with a <code>POST /classify</code> endpoint and a <code>GET /health</code> endpoint. Open the file and read through it — notice how it imports directly from <code>ticket_classifier.py</code>.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This is the delivery acceleration moment — wrapping a client's existing logic as a production API, without rewriting anything. Bob generates the boilerplate; you focus on the business value.</em></p>
         <div class="sc-row">
-          <img src="../bob3.11.png" alt="Bob explaining API integration strategy" class="sc-img" />
-          <img src="../bob3.12.png" alt="Bob generating app.py FastAPI wrapper" class="sc-img" />
+          <img src="./lab-screenshots/bob3.11.png" alt="Bob explaining API integration strategy" class="sc-img" />
+          <img src="./lab-screenshots/bob3.12.png" alt="Bob generating app.py FastAPI wrapper" class="sc-img" />
         </div>
         <p class="sc-caption">Bob explaining the integration approach and generating <code>app.py</code></p>
       </div>
@@ -869,15 +879,16 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <div class="sc-row" style="flex-wrap:wrap;">
-          <img src="../Bob 3.21.png" alt="Bob testing the API with sample tickets" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
-          <img src="../bob3.22.png" alt="API response in terminal" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
+          <img src="./lab-screenshots/Bob 3.21.png" alt="Bob testing the API with sample tickets" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
+          <img src="./lab-screenshots/bob3.22.png" alt="API response in terminal" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
         </div>
         <div class="sc-row" style="flex-wrap:wrap;">
-          <img src="../bob3.23.png" alt="CRITICAL security incident classification result" class="sc-img" style="flex:2;" />
-          <img src="../bob3.24.png" alt="HIGH service outage classification result" class="sc-img" style="flex:1;min-width:200px;" />
+          <img src="./lab-screenshots/bob3.23.png" alt="CRITICAL security incident classification result" class="sc-img" style="flex:2;" />
+          <img src="./lab-screenshots/bob3.24.png" alt="HIGH service outage classification result" class="sc-img" style="flex:1;min-width:200px;" />
         </div>
-        <img src="../bob 3.25.png" alt="All three sample tickets tested" class="sc-img" />
+        <img src="./lab-screenshots/bob 3.25.png" alt="All three sample tickets tested" class="sc-img" />
         <p class="sc-caption">You should see <code>CRITICAL</code> for the security incident, <code>HIGH</code> for the outage, and <code>HIGH</code> for the billing escalation.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This running endpoint is already a PoC you can screen-share with a client. "Here's what your triage logic looks like as a live API" is a compelling demo — and you built it in under 30 minutes on a codebase you'd never seen.</em></p>
       </div>
     </div>
 
@@ -886,7 +897,22 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
       <div class="notif-body">
         <p class="notif-title">✅ Track A Complete</p>
         <p>You started with a raw Python function and — using only Bob prompts — cloned the repo, understood the logic, generated a production-ready API, and tested it live. This is the full workflow you'd use to onboard to a client codebase and ship something new in a single session.</p>
+        <p style="margin-top:8px;">From here, Bob can keep going: swap the keyword classifier for any AI model or inference service, add a ServiceNow or Slack integration, deploy to IBM Code Engine, or generate a watsonx Orchestrate agent YAML that calls this endpoint. Check the <strong>Reference</strong> tab for next steps and the exact prompts to use.</p>
+        <p style="margin-top:8px;"><strong>Want to keep going?</strong> <a href="#" onclick="showTab('track-b', document.querySelector('[onclick*=track-b]'));document.getElementById('tab-track-b').scrollIntoView({behavior:'smooth'});return false;" style="color:var(--cds-blue-60);">Continue to Track B → Deploy to IBM Code Engine</a> and get a live public URL for the API you just built.</p>
       </div>
+    </div>
+
+    <div class="cds--inline-notification" style="background:var(--cds-blue-10);border-left:3px solid var(--cds-blue-60);">
+      <span class="notif-icon">🚀</span>
+      <div class="notif-body">
+        <p class="notif-title">Excited about what Bob can do?</p>
+        <p>If you were intrigued, excited, or impressed today — whether for your own delivery, a client PoC, or a full engagement — reach out to <strong>[CONTACT NAME / EMAIL]</strong> to get started with Bob. You could be eligible for <strong>10% off</strong> your first license. Integrate Bob into your workflows, accelerate your deal flow, or put it in front of a client as part of your next proposal.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:var(--s-05) 0 var(--s-03);">
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:var(--s-03);">How was the lab? We'd love your feedback.</p>
+      <a href="https://wkf.ms/4dy45ad" target="_blank" style="display:inline-block;padding:10px 24px;background:var(--cds-blue-60);color:#fff;font-size:14px;font-weight:600;border-radius:4px;text-decoration:none;">📋 Share your feedback</a>
     </div>
 
   </div>
@@ -932,6 +958,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will run <code>git clone</code>, open the folder as your workspace, and give you an overview of the app. You should see the file tree appear in the left panel.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>On a real client engagement, this is exactly how you'd start — hand Bob the repo URL and have it orient you before you've read a single file.</em></p>
         <div class="cds--inline-notification cds--inline-notification--warning">
           <span class="notif-icon">⚠️</span>
           <div class="notif-body">
@@ -954,10 +981,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <div class="sc-row">
-          <img src="../bob2.11.png" alt="Bob terminal running git clone" class="sc-img" />
-          <img src="../bob2.12.png" alt="Bob file tree after clone" class="sc-img" />
+          <img src="./lab-screenshots/bob2.11.png" alt="Bob terminal running git clone" class="sc-img" />
+          <img src="./lab-screenshots/bob2.12.png" alt="Bob file tree after clone" class="sc-img" />
         </div>
-        <img src="../bob 2.13.png" alt="Bob chat showing clone result and workspace" class="sc-img" />
+        <img src="./lab-screenshots/bob 2.13.png" alt="Bob chat showing clone result and workspace" class="sc-img" />
         <p class="sc-caption">Bob cloning the repo and opening the workspace</p>
       </div>
     </div>
@@ -975,9 +1002,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will run <code>pip install -r requirements.txt</code> and <code>python ticket_classifier.py</code>. You should see five test cases print — each with a classification, priority, and routing decision.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>You've gone from zero to a running application on an unfamiliar codebase in minutes. That's the onboarding acceleration story — and it's the same whether it's a lab or a client's production repo.</em></p>
         <div class="sc-row">
-          <img src="../bob2.21.png" alt="Bob running pip install" class="sc-img" />
-          <img src="../bob2.22.png" alt="Bob terminal showing classifier output" class="sc-img" />
+          <img src="./lab-screenshots/bob2.21.png" alt="Bob running pip install" class="sc-img" />
+          <img src="./lab-screenshots/bob2.22.png" alt="Bob terminal showing classifier output" class="sc-img" />
         </div>
         <p class="sc-caption">All 5 test cases printing successfully — your environment is ready</p>
       </div>
@@ -996,6 +1024,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">This is the same kind of codebase orientation question you'd use on a client engagement. Bob will trace the data flow and flag any issues. Read it — you'll need this context in Block 2.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This keyword matching works well for structured inputs. If you wanted smarter classification on messy, real-world ticket descriptions, Bob can swap this logic out for any AI model or inference service — no change to the API interface required.</em></p>
       </div>
     </div>
 
@@ -1022,7 +1051,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
             <div class="prompt-text">"How can I integrate this classification function in a support chat assistant as a tool?"</div>
           </div>
         </div>
-        <p style="margin-top:10px;">Bob will explain how to expose the classifier as an HTTP tool. If Bob doesn't proactively generate the code, follow up with:</p>
+        <p style="margin-top:10px;">Bob will explain how to expose the classifier as an HTTP tool. Once it's deployed, this same endpoint is what a watsonx Orchestrate agent would call when an employee describes a support issue in plain English. If Bob doesn't proactively generate the code, follow up with:</p>
         <div class="cds--prompt-card">
           <div class="prompt-badge">4b</div>
           <div>
@@ -1031,9 +1060,10 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will generate <code>app.py</code> with a <code>POST /classify</code> endpoint. Open the file and read through it.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This is the delivery moment — existing client logic, now exposed as a proper API, with Bob writing the boilerplate. The same approach works on any function or module a client asks you to productionise.</em></p>
         <div class="sc-row">
-          <img src="../bob3.11.png" alt="Bob explaining API integration" class="sc-img" />
-          <img src="../bob3.12.png" alt="Bob generating app.py" class="sc-img" />
+          <img src="./lab-screenshots/bob3.11.png" alt="Bob explaining API integration" class="sc-img" />
+          <img src="./lab-screenshots/bob3.12.png" alt="Bob generating app.py" class="sc-img" />
         </div>
         <p class="sc-caption">Bob explaining the integration and generating <code>app.py</code></p>
       </div>
@@ -1062,15 +1092,16 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <div class="sc-row" style="flex-wrap:wrap;">
-          <img src="../Bob 3.21.png" alt="Bob testing the API with sample tickets" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
-          <img src="../bob3.22.png" alt="API response in terminal" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
+          <img src="./lab-screenshots/Bob 3.21.png" alt="Bob testing the API with sample tickets" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
+          <img src="./lab-screenshots/bob3.22.png" alt="API response in terminal" class="sc-img" style="flex:1;min-width:220px;max-width:48%;" />
         </div>
         <div class="sc-row" style="flex-wrap:wrap;">
-          <img src="../bob3.23.png" alt="CRITICAL security incident classification result" class="sc-img" style="flex:2;" />
-          <img src="../bob3.24.png" alt="HIGH service outage classification result" class="sc-img" style="flex:1;min-width:200px;" />
+          <img src="./lab-screenshots/bob3.23.png" alt="CRITICAL security incident classification result" class="sc-img" style="flex:2;" />
+          <img src="./lab-screenshots/bob3.24.png" alt="HIGH service outage classification result" class="sc-img" style="flex:1;min-width:200px;" />
         </div>
-        <img src="../bob 3.25.png" alt="All three sample tickets tested" class="sc-img" />
+        <img src="./lab-screenshots/bob 3.25.png" alt="All three sample tickets tested" class="sc-img" />
         <p class="sc-caption">You should see <code>CRITICAL</code> for the security incident, <code>HIGH</code> for the outage, and <code>HIGH</code> for the billing escalation.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>A client watching this would be asking "how long did that take?" — that's your opening. This is a PoC you built in under 30 minutes on code you'd never seen before.</em></p>
       </div>
     </div>
 
@@ -1087,6 +1118,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Then verify it yourself — remove the <code>"description"</code> field from your curl command and see the <code>422</code> response. This is a useful thing to show clients who ask about API robustness.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Need to add authentication, rate limiting, or a logging layer before sharing this with a client? Bob can generate all of that — just describe what you need.</em></p>
       </div>
     </div>
 
@@ -1101,6 +1133,25 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
   </div>
   <div class="block-body">
 
+    <!-- Step 0: Environment Setup -->
+    <div class="lab-step">
+      <div class="step-num b">0</div>
+      <div class="step-content">
+        <h4>Prerequisite — Set Up Your IBM Cloud Environment</h4>
+        <p>Before you can deploy anything, you need access to a shared IBM Cloud account with Code Engine and Container Registry already provisioned. This is the prerequisite step that unlocks the deployment portion of the lab.</p>
+        <div class="cds--inline-notification cds--inline-notification--info">
+          <span class="notif-icon">📧</span>
+          <div class="notif-body">
+            <p class="notif-title">Check your inbox</p>
+            <p>You should have received an email from <strong>no-reply@cloud.ibm.com</strong> inviting you to join an IBM Cloud account. Open that email, click <strong>Accept invitation</strong>, and log in with your IBM id. This gives you access to the shared lab environment where Code Engine and Container Registry are already set up and ready for your deployment.</p>
+          </div>
+        </div>
+        <img src="./lab-screenshots/bob 4.00.png" alt="IBM Cloud account invitation email showing account name and Account ID" class="sc-img" style="margin-top:var(--s-04);" />
+        <p class="sc-caption">The invitation email shows your cloud account name and Account ID — note these down, you'll need the account name when Bob asks which account to target during deployment.</p>
+        <p style="margin-top:10px;">Once you've accepted the invite and logged in to <a href="https://cloud.ibm.com" target="_blank">cloud.ibm.com</a>, come back here and continue to Step 1.</p>
+      </div>
+    </div>
+
     <!-- Step 1: Deploy -->
     <div class="lab-step">
       <div class="step-num b">1</div>
@@ -1114,18 +1165,20 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will look at what you have (<code>app.py</code>, <code>requirements.txt</code>), generate a Dockerfile, walk you through IBM Cloud authentication, and produce the exact deploy commands. Follow each step as Bob presents it — read before confirming.</p>
-        <div class="cred-box">
-          <div class="cred-title">🔑 Lab Credentials — IBM Cloud</div>
-          <table>
-            <thead><tr><th>Field</th><th>Value</th></tr></thead>
-            <tbody>
-              <tr><td>Login method</td><td>SSO — use your IBM w3id</td></tr>
-              <tr><td>Resource group</td><td>Default</td></tr>
-              <tr><td>Code Engine project</td><td>techxchange-lab</td></tr>
-              <tr><td>Region</td><td>us-south (Dallas)</td></tr>
-              <tr><td>Container registry namespace</td><td>techxchange</td></tr>
-            </tbody>
-          </table>
+        <div class="cds--inline-notification cds--inline-notification--info">
+          <span class="notif-icon">ℹ️</span>
+          <div class="notif-body">
+            <p class="notif-title">Environment details for this lab</p>
+            <table style="font-size:13px;width:100%;border-collapse:collapse;margin-top:6px;">
+              <thead><tr><th style="text-align:left;padding:4px 8px;border-bottom:1px solid var(--border-subtle);">Field</th><th style="text-align:left;padding:4px 8px;border-bottom:1px solid var(--border-subtle);">Value</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 8px;">Login method</td><td style="padding:4px 8px;">SSO — use your IBM id</td></tr>
+                <tr><td style="padding:4px 8px;">Code Engine project</td><td style="padding:4px 8px;"><code>techxchange-lab</code></td></tr>
+                <tr><td style="padding:4px 8px;">Region</td><td style="padding:4px 8px;">us-south (Dallas)</td></tr>
+                <tr><td style="padding:4px 8px;">Container registry namespace</td><td style="padding:4px 8px;"><code>techxchange-lab</code></td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="cds--inline-notification cds--inline-notification--warning">
           <span class="notif-icon">⚠️</span>
@@ -1135,11 +1188,18 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <div class="sc-row">
-          <img src="../bob4.11.png" alt="Bob walking through Code Engine deployment steps" class="sc-img" />
-          <img src="../bob4.12.png" alt="Terminal showing Code Engine build and deploy logs" class="sc-img" />
+          <img src="./lab-screenshots/bob4.11.png" alt="Bob walking through Code Engine deployment steps" class="sc-img" />
+          <img src="./lab-screenshots/bob4.12.png" alt="Terminal showing Code Engine build and deploy logs" class="sc-img" />
         </div>
-        <img src="../bob 4.13.png" alt="Bob deployment walkthrough continued" class="sc-img" />
-        <img src="../bob 4.14.png" alt="Deployment confirmation in terminal" class="sc-img" style="max-width:420px;" />
+        <div class="cds--prompt-card" style="margin-top:12px;">
+          <div class="prompt-badge">↩</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Execute Commands</div>
+            <div class="prompt-text">"Can you execute those commands for me?"</div>
+          </div>
+        </div>
+        <img src="./lab-screenshots/bob 4.13.png" alt="Bob deployment walkthrough continued" class="sc-img" />
+        <img src="./lab-screenshots/bob 4.14.png" alt="Deployment confirmation in terminal" class="sc-img" style="max-width:420px;" />
         <p class="sc-caption">Bob guiding the deployment — terminal showing build logs and deploy confirmation</p>
       </div>
     </div>
@@ -1158,13 +1218,14 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will retrieve the URL and run a live test against <code>/classify</code>.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>That URL is your demo asset. Screen-share it with a client, POST a real ticket description, and show them the response in under a second. "This is what we built this afternoon" is a powerful close to any discovery conversation.</em></p>
         <div class="sc-row">
-          <img src="../bob 4.20.png" alt="Bob retrieving the live Code Engine URL" class="sc-img" />
-          <img src="../bob 4.21.png" alt="Bob running a live test against the deployed endpoint" class="sc-img" />
+          <img src="./lab-screenshots/bob 4.20.png" alt="Bob retrieving the live Code Engine URL" class="sc-img" />
+          <img src="./lab-screenshots/bob 4.21.png" alt="Bob running a live test against the deployed endpoint" class="sc-img" />
         </div>
-        <img src="../bob4.22.png" alt="Live endpoint response from Code Engine" class="sc-img" />
-        <img src="../bob4.23.png" alt="Full classification response from deployed API" class="sc-img" />
-        <img src="../bob 4.24.png" alt="All three sample tickets tested against live URL" class="sc-img" />
+        <img src="./lab-screenshots/bob4.22.png" alt="Live endpoint response from Code Engine" class="sc-img" />
+        <img src="./lab-screenshots/bob4.23.png" alt="Full classification response from deployed API" class="sc-img" />
+        <img src="./lab-screenshots/bob 4.24.png" alt="All three sample tickets tested against live URL" class="sc-img" />
         <p class="sc-caption">Live endpoint on IBM Code Engine — classification response confirmed</p>
       </div>
     </div>
@@ -1182,7 +1243,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
             <div class="prompt-text">"My ticket classifier API is live at [your Code Engine URL]. Can you generate a watsonx Orchestrate agent YAML that registers POST /classify as an HTTP tool, so an agent can call it when an employee describes a support issue?"</div>
           </div>
         </div>
-        <p style="margin-top:10px;">Bob will generate a self-contained agent YAML. You don't need an Orchestrate instance to generate or review the file — it's a useful artifact to bring to a client conversation.</p>
+        <p style="margin-top:10px;">Bob will generate a self-contained agent YAML. You don't need an Orchestrate instance to generate or review the file — it's a useful artifact to bring to a client conversation. And if you wanted to go further — connecting the classifier to ServiceNow to create real tickets, or upgrading the logic to IBM Granite — Bob can walk you through both.</p>
         <div class="cds--inline-notification cds--inline-notification--info">
           <span class="notif-icon">ℹ️</span>
           <div class="notif-body">
@@ -1198,7 +1259,21 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
       <div class="notif-body">
         <p class="notif-title">✅ Track B Complete</p>
         <p>You have a live, public API endpoint running on IBM Cloud that classifies IT support tickets in under 1 second. Your URL is the proof point: <em>"This is what we built in 45 minutes. Connecting it to your ServiceNow instance and Orchestrate agent is the next conversation."</em></p>
+        <p style="margin-top:8px;"><strong>Next steps Bob can help with:</strong> swap the keyword classifier for any AI model or inference service · add a ServiceNow or Slack integration after classification · register this endpoint as a tool in a watsonx Orchestrate agent.</p>
       </div>
+    </div>
+
+    <div class="cds--inline-notification" style="background:var(--cds-blue-10);border-left:3px solid var(--cds-blue-60);">
+      <span class="notif-icon">🚀</span>
+      <div class="notif-body">
+        <p class="notif-title">Excited about what Bob can do?</p>
+        <p>If you were intrigued, excited, or impressed today — whether for your own delivery, a client PoC, or a full engagement — reach out to <strong>[CONTACT NAME / EMAIL]</strong> to get started with Bob. You could be eligible for <strong>10% off</strong> your first license. Integrate Bob into your workflows, accelerate your deal flow, or put it in front of a client as part of your next proposal.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:var(--s-05) 0 var(--s-03);">
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:var(--s-03);">How was the lab? We'd love your feedback.</p>
+      <a href="https://wkf.ms/4dy45ad" target="_blank" style="display:inline-block;padding:10px 24px;background:var(--cds-blue-60);color:#fff;font-size:14px;font-weight:600;border-radius:4px;text-decoration:none;">📋 Share your feedback</a>
     </div>
 
   </div>
@@ -1242,7 +1317,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
 
 <div class="cds--row">
   <h2 class="section-heading">Where to Take This Next</h2>
-  <p>You've built a working, deployed classifier. These three extensions turn it into a production-grade service — and each one represents a natural scope of work to bring back to a client. Bob can generate the code for all three.</p>
+  <p>You've built a working, deployed classifier. These three extensions turn it into a production-grade service — and each one is a natural scope of work to bring back to a client. Bob can generate the code for all three, from a single prompt.</p>
   <div class="cds--grid-3">
     <div class="ext-tile">
       <div class="ext-num">01</div>
