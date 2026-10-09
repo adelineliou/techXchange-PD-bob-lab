@@ -27,7 +27,9 @@ we see in the queue. Routing rules (team assignment, priority, SLA) are maintain
 support-ticket-lab/
 ├── ticket_classifier.py        # Core classification and routing logic
 ├── requirements.txt            # Python dependencies
-├── orchestrate_agent.yaml      # Agent definition for watsonx Orchestrate integration
+├── Dockerfile                  # nginx image — serves LAB_GUIDE.html on port 8080
+├── LAB_GUIDE.html              # Participant lab guide (deployed to IBM Code Engine)
+├── lab-screenshots/            # Screenshots embedded in the lab guide
 ├── sample_tickets/
 │   ├── security_incident.json  # Example: phishing / credential compromise
 │   ├── service_outage.json     # Example: portal down, HTTP 503

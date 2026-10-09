@@ -30,11 +30,11 @@ What they're building today isn't just a demo. Remind participants that this kin
 
 When a participant finishes a significant step, ask: *"Which of those three is most relevant to what you're working on right now?"* It anchors the lab to something real for them.
 
-### 2. Remind them about their 250 Bob Coins — they have two weeks to keep exploring
+### 2. Remind them about their 150 Bob Coins — they have two weeks to keep exploring
 
 Participants often get engrossed in the lab and forget that the coins don't expire today. At a natural pause — after they finish a track, or when they're watching a deployment complete — mention it:
 
-> *"You've got 250 coins loaded, and they're live for two weeks after today. Anything you're curious about but don't have time for right now — save it and come back to it."*
+> *"You've got 150 coins loaded, and they're live for two weeks after today. Anything you're curious about but don't have time for right now — save it and come back to it."*
 
 This is especially useful for participants who hit a blocker or run out of time on Track B. The lab ending isn't the end of their access.
 
@@ -63,10 +63,10 @@ Only step in directly if Bob's response is genuinely wrong or the participant is
 
 ### Bob Coins — Lab Allocation
 
-Each participant receives **250 Bob Coins specifically for this lab**, separate from any free trial they may have or sign up for during the event. These coins are theirs to use during the session and remain active for **one week after the event**, giving participants time to explore further and fill any curiosity gaps after the lab ends.
+Each participant receives **150 Bob Coins specifically for this lab**, separate from any free trial they may have or sign up for during the event. These coins are theirs to use during the session and remain active for **one week after the event**, giving participants time to explore further and fill any curiosity gaps after the lab ends.
 
 - [ ] Confirm coins have been provisioned for all registered participants before the event
-- [ ] Let participants know at the start of the session: *"You have 250 Bob Coins loaded for today — these are separate from any trial and stay live for a week after the event so you can keep experimenting."*
+- [ ] Let participants know at the start of the session: *"You have 150 Bob Coins loaded for today — these are separate from any trial and stay live for a week after the event so you can keep experimenting."*
 - [ ] If a participant's coin balance shows zero at the start, escalate to the main instructors immediately — do not wait until it becomes a blocker mid-lab
 
 ### Know the Business Value and Lab Goal
@@ -108,7 +108,7 @@ Each participant receives **250 Bob Coins specifically for this lab**, separate 
 - Same root cause as above — wrong workspace. Verify the file tree in Bob's left panel shows `ticket_classifier.py`, `requirements.txt`, etc. at the top level. If not, reset the workspace folder.
 
 **Bob Coins running low mid-lab**
-- Each participant has been provisioned **250 Bob Coins** for this lab, separate from any free trial. This allocation is designed to cover the full session comfortably.
+- Each participant has been provisioned **150 Bob Coins** for this lab, separate from any free trial. This allocation is designed to cover the full session comfortably.
 - Encourage shorter, more direct prompts — "Fix this bug" instead of a paragraph of context Bob already has.
 - Participants can check their remaining balance in Settings.
 - If a participant is completely blocked, pair them with someone who has coins remaining, or ask the main instructors — they may be able to top up the participant's balance directly.

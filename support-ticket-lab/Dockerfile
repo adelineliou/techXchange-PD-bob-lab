@@ -1,12 +1,14 @@
-FROM python:3.11-slim
+FROM nginx:alpine
 
-WORKDIR /app
+# Reconfigure nginx to listen on 8080 (required by Code Engine)
+RUN sed -i 's/listen\s*80;/listen 8080;/g' /etc/nginx/conf.d/default.conf
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy the lab guide HTML as the default page
+COPY LAB_GUIDE.html /usr/share/nginx/html/index.html
 
-COPY ticket_classifier.py .
+# Copy screenshots directory
+COPY lab-screenshots/ /usr/share/nginx/html/lab-screenshots/
 
 EXPOSE 8080
 
-CMD ["uvicorn", "ticket_classifier:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["nginx", "-g", "daemon off;"]
