@@ -8,9 +8,6 @@ Facilitator and participant materials for the IBM Bob hands-on lab delivered at 
 
 ```
 techXchange-PD-bob-lab/
-├── EVENT_DESCRIPTION.md        # Public-facing event description
-├── EVENT_DESCRIPTION.pdf       # PDF version of the event description
-├── FACILITATOR_README.md       # Facilitator guide — setup, facilitation tips, troubleshooting
 ├── support-ticket-lab/         # Lab content (participant-facing)
 │   ├── LAB_GUIDE.html          # Main lab guide — deployed to IBM Code Engine
 │   ├── Dockerfile              # nginx image that serves LAB_GUIDE.html on port 8080
@@ -52,12 +49,3 @@ ibmcloud ce project select --name techxchange-pd-lab
 ibmcloud ce app update --name lab-guide --image us.icr.io/wxo-code-engine/techxchange-lab-guide:latest --wait
 ```
 
----
-
-## Facilitator Resources
-
-See [`FACILITATOR_README.md`](FACILITATOR_README.md) for:
-- Pre-event setup checklist
-- Facilitation tips and conversation starters
-- Bob Coins allocation (150 coins per participant)
-- Troubleshooting common issues

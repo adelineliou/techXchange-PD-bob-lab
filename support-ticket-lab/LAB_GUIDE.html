@@ -263,6 +263,16 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
 .prompt-badge.amber { background: #fdd13a; color: #3c2f00; }
 .prompt-meta { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--s-01); }
 .prompt-text { font-size: 14px; color: var(--text-primary); font-style: italic; line-height: 1.5; }
+.cds--prompt-card > div:not(.prompt-badge) { flex: 1; min-width: 0; }
+.copy-btn {
+  flex-shrink: 0; margin-left: auto; align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff; color: var(--cds-blue-60); border: 1px solid var(--cds-blue-60);
+  font-family: inherit; font-size: 12px; line-height: 1; padding: 6px 10px; cursor: pointer;
+}
+.copy-btn:hover { background: var(--cds-blue-60); color: #fff; }
+.copy-btn:focus-visible { outline: 2px solid var(--cds-blue-60); outline-offset: 2px; }
+.copy-btn.copied { background: #198038; border-color: #198038; color: #fff; }
 
 .lab-block { margin-bottom: var(--s-09); }
 .block-header { display: flex; align-items: center; gap: var(--s-04); background: var(--cds-gray-100); padding: var(--s-04) var(--s-06); }
@@ -392,6 +402,9 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
     </li>
     <li class="cds--tabs__nav-item" role="none">
       <button class="cds--tabs__nav-link" role="tab" aria-selected="false" onclick="showTab('reference', this)">Reference</button>
+    </li>
+    <li class="cds--tabs__nav-item" role="none">
+      <button class="cds--tabs__nav-link" role="tab" aria-selected="false" onclick="showTab('troubleshooting', this)">Troubleshooting</button>
     </li>
   </ul>
 </div>
@@ -826,6 +839,14 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
   </div>
   <div class="block-body">
 
+    <div class="cds--inline-notification cds--inline-notification--warning">
+      <span class="notif-icon">⚠️</span>
+      <div class="notif-body">
+        <p class="notif-title">If Bob keeps thinking and won't finish</p>
+        <p>If Bob gets stuck in a loading loop — thinking, re-thinking, never finishing — don't wait it out. Stop the conversation and start a new task or chat, then pick up from where you left off.</p>
+      </div>
+    </div>
+
     <!-- Step 1: Integration question -->
     <div class="lab-step">
       <div class="step-num a">1</div>
@@ -1039,6 +1060,14 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
   </div>
   <div class="block-body">
 
+    <div class="cds--inline-notification cds--inline-notification--warning">
+      <span class="notif-icon">⚠️</span>
+      <div class="notif-body">
+        <p class="notif-title">If Bob keeps thinking and won't finish</p>
+        <p>If Bob gets stuck in a loading loop — thinking, re-thinking, never finishing — don't wait it out. Stop the conversation and start a new task or chat, then pick up from where you left off.</p>
+      </div>
+    </div>
+
     <!-- Step 1: Integration -->
     <div class="lab-step">
       <div class="step-num b">1</div>
@@ -1133,6 +1162,14 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
   </div>
   <div class="block-body">
 
+    <div class="cds--inline-notification cds--inline-notification--warning">
+      <span class="notif-icon">⚠️</span>
+      <div class="notif-body">
+        <p class="notif-title">If Bob keeps thinking and won't finish</p>
+        <p>If Bob gets stuck in a loading loop — thinking, re-thinking, never finishing — don't wait it out. Stop the conversation and start a new task or chat, then pick up from where you left off.</p>
+      </div>
+    </div>
+
     <!-- Step 0: Environment Setup -->
     <div class="lab-step">
       <div class="step-num b">0</div>
@@ -1148,7 +1185,15 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         </div>
         <img src="./lab-screenshots/bob 4.00.png" alt="IBM Cloud account invitation email showing account name and Account ID" class="sc-img" style="margin-top:var(--s-04);" />
         <p class="sc-caption">The invitation email shows your cloud account name and Account ID — note these down, you'll need the account name when Bob asks which account to target during deployment.</p>
-        <p style="margin-top:10px;">Once you've accepted the invite and logged in to <a href="https://cloud.ibm.com" target="_blank">cloud.ibm.com</a>, come back here and continue to Step 1.</p>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">🛠️</span>
+          <div class="notif-body">
+            <p class="notif-title">Also required — IBM Cloud CLI (needs sudo)</p>
+            <p>Deploying requires the <strong>IBM Cloud CLI</strong> (<code>ibmcloud</code>) installed on your machine, along with the Code Engine and Container Registry plugins. The install needs <strong>sudo</strong> (administrator) rights on your laptop. Not sure if it's installed? Run <code>ibmcloud --version</code> in a terminal.</p>
+            <p style="margin-top:8px;"><strong>Need help?</strong> You can ask Bob to walk you through it, for example: <em>"Do I have the IBM Cloud CLI installed? If not, walk me through installing it on my machine and tell me exactly which commands to run, including the Code Engine and Container Registry plugins."</em> Bob will give you the commands for your OS — you'll be prompted for your sudo password when you run them.</p>
+          </div>
+        </div>
+        <p style="margin-top:10px;">Once you've accepted the invite, logged in to <a href="https://cloud.ibm.com" target="_blank">cloud.ibm.com</a>, and have the IBM Cloud CLI installed, come back here and continue to Step 1.</p>
       </div>
     </div>
 
@@ -1422,6 +1467,148 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
 </div><!-- /cds--content -->
 </div><!-- /tab-reference -->
 
+<!-- ════════════════════════════════════════════
+     TAB: TROUBLESHOOTING
+════════════════════════════════════════════ -->
+<div id="tab-troubleshooting" class="tab-pane">
+<div class="cds--content">
+
+<div class="cds--row">
+  <h2 class="section-heading">Don't Have Bob Yet, or No IBMid?</h2>
+  <p>Follow these steps if you haven't installed Bob, can't sign in, or never registered. It takes about 10 minutes — you can keep reading the guide while the installer runs.</p>
+
+  <div class="cds--data-table-container">
+    <table class="cds--data-table">
+      <thead><tr><th>Where are you?</th><th>Start at</th></tr></thead>
+      <tbody>
+        <tr><td>Bob isn't installed yet</td><td><strong>Step 1</strong> — Download and install Bob</td></tr>
+        <tr><td>Bob is installed, but I have no IBMid (IBM.com login)</td><td><strong>Step 2</strong> — Create an IBMid</td></tr>
+        <tr><td>Bob is installed and I have an IBMid</td><td><strong>Step 3</strong> — Sign in to Bob</td></tr>
+        <tr><td>I'm an IBM employee</td><td><a href="#ts-employees" style="color:var(--cds-blue-60);">IBM employees and w3id</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="lab-step" style="margin-top:var(--s-06);">
+    <div class="step-num a">1</div>
+    <div class="step-content">
+      <h4>Download and install Bob</h4>
+      <p>Go to <a href="https://bob.ibm.com" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">bob.ibm.com</a> and click <strong>Download</strong> in the top-right corner (<strong>1</strong>). The <strong>Get free trial</strong> button (<strong>2</strong>) is for people who also need an account — see Step 2.</p>
+      <img src="./lab-screenshots/prereqs/prereq-1-bob-home.png" alt="Bob home page with the Download and Get free trial buttons marked" class="sc-img" style="max-width:700px;" />
+      <p class="sc-caption">Bob home page — <strong>1</strong> Download · <strong>2</strong> Get free trial</p>
+
+      <p>On the download page, click the large <strong>Download for macOS / Windows</strong> button (<strong>1</strong>) — it detects your operating system. To choose manually, use the row for your machine: <strong>Mac ARM</strong> (<strong>2</strong>), <strong>Mac Intel</strong>, or <strong>Windows x64</strong> (<strong>3</strong>). Leave the <strong>Bob IDE</strong> tab selected, not Bob Shell.</p>
+      <img src="./lab-screenshots/prereqs/prereq-2-bob-download.png" alt="Bob download page with the download buttons marked" class="sc-img" style="max-width:700px;" />
+      <p class="sc-caption">Download page — <strong>1</strong> automatic download · <strong>2</strong> Mac ARM · <strong>3</strong> Windows x64</p>
+
+      <div class="cds--inline-notification cds--inline-notification--info">
+        <span class="notif-icon">ℹ️</span>
+        <div class="notif-body">
+          <p class="notif-title">Mac: ARM or Intel?</p>
+          <p>Click the Apple menu → <strong>About This Mac</strong> and look at <strong>Chip</strong>. "Apple M…" (M1, M2, M3, M4) means <strong>Mac ARM</strong>. "Intel" means <strong>Mac Intel</strong>. Installing the wrong one is the most common reason Bob won't open on a Mac.</p>
+        </div>
+      </div>
+
+      <p style="margin-top:12px;">Then install it:</p>
+      <ul>
+        <li><strong>Mac:</strong> open the downloaded <code>.pkg</code> and follow the wizard (or open the <code>.dmg</code> and drag Bob into <strong>Applications</strong>).</li>
+        <li><strong>Windows:</strong> run the downloaded <code>.exe</code>, keep the default install location, and click <strong>Finish</strong>.</li>
+      </ul>
+      <p>If your work laptop blocks the installer, pair with a neighbour for the lab and install Bob on a personal device later.</p>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="lab-step">
+    <div class="step-num a">2</div>
+    <div class="step-content">
+      <h4>Create an IBMid (skip this if you already have one)</h4>
+      <p>An IBMid is an IBM.com login tied to your email address. There are two ways to get one — use whichever is quicker.</p>
+
+      <p><strong>Option A — Register through the Bob free trial</strong> <span class="cds--tag--blue" style="margin-bottom:0;">Recommended</span><br>This creates your IBMid and your Bob account in one go.</p>
+      <ol style="font-size:var(--body-compact-size);">
+        <li>Go to <a href="https://bob.ibm.com/trial" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">bob.ibm.com/trial</a>, or click <strong>Get free trial</strong> on the Bob home page.</li>
+        <li>Click <strong>Sign up with Google</strong> (<strong>1</strong>) or <strong>Sign up with GitHub</strong> (<strong>2</strong>) for the fastest route — no new password needed. Or fill in the form: email, password, first and last name, country, then click <strong>Next</strong>.</li>
+      </ol>
+      <img src="./lab-screenshots/prereqs/prereq-3-bob-trial.png" alt="Bob free trial registration page with the Google and GitHub sign-up buttons marked" class="sc-img" style="max-width:700px;" />
+      <p class="sc-caption">Free trial registration — <strong>1</strong> Google · <strong>2</strong> GitHub · or use the form below</p>
+      <ol start="3" style="font-size:var(--body-compact-size);">
+        <li>If you used the form, IBM emails you a <strong>verification code</strong>. Enter it under <strong>Verify email</strong> and click <strong>Submit</strong>. The email address you entered is now your IBMid. If the code hasn't arrived after a minute, check spam/junk or click <strong>Resend code</strong>.</li>
+      </ol>
+
+      <p style="margin-top:16px;"><strong>Option B — Create a standalone IBMid first</strong></p>
+      <ol style="font-size:var(--body-compact-size);">
+        <li>Go to <a href="https://www.ibm.com/account/reg/us-en/signup?formid=urx-19776" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">ibm.com/account/reg/us-en/signup</a>.</li>
+        <li>Enter your <strong>Email</strong> (<strong>1</strong>), first name, last name and country, then click <strong>Continue</strong> (<strong>2</strong>). You can also use the <strong>Google</strong> or <strong>GitHub</strong> buttons underneath.</li>
+      </ol>
+      <img src="./lab-screenshots/prereqs/prereq-5-ibmid-signup.png" alt="Create an IBMid page with the email field and Continue button marked" class="sc-img" style="max-width:700px;" />
+      <p class="sc-caption">Create an IBMid — <strong>1</strong> Email · <strong>2</strong> Continue</p>
+      <ol start="3" style="font-size:var(--body-compact-size);">
+        <li>Verify the code that IBM emails you, then carry on to Step 3.</li>
+      </ol>
+
+      <div class="cds--inline-notification cds--inline-notification--warning">
+        <span class="notif-icon">⚠️</span>
+        <div class="notif-body">
+          <p class="notif-title">Use the email you registered for the lab with</p>
+          <p>If you can, register with the same email address you used to sign up for this lab. It lets the instructors find your account quickly if your Bob Coins need fixing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="lab-step">
+    <div class="step-num a">3</div>
+    <div class="step-content">
+      <h4>Sign in to Bob</h4>
+      <p>Open <strong>Bob</strong> from Applications (Mac) or the Start menu (Windows). On first launch it opens a browser tab on the Bob login page.</p>
+      <p>In the <strong>SSO / IBMid</strong> field (<strong>1</strong>), type your IBMid email address and click <strong>Continue</strong> (<strong>2</strong>). If you registered with Google or GitHub, use <strong>Continue with Google</strong> or <strong>Continue with Github</strong> instead.</p>
+      <img src="./lab-screenshots/prereqs/prereq-4-bob-login.png" alt="Bob login page with the SSO / IBMid field and Continue button marked" class="sc-img" style="max-width:700px;" />
+      <p class="sc-caption">Bob login — <strong>1</strong> SSO / IBMid field · <strong>2</strong> Continue</p>
+      <p>Finish signing in in the browser, then switch back to the Bob app. You should see the chat panel, ready for the first lab prompt.</p>
+      <p>If the browser tab doesn't open by itself, go to <a href="https://bob.ibm.com/login" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">bob.ibm.com/login</a>, sign in there, then return to the Bob app.</p>
+    </div>
+  </div>
+
+  <!-- Employees -->
+  <h3 id="ts-employees">IBM employees and w3id</h3>
+  <p>A <strong>w3id</strong> is an IBM employee credential. IBM issues it to employees, so it can't be self-registered — partners use an IBMid (Steps 2–3).</p>
+  <ul>
+    <li>If you're an IBM employee with a w3id, type your IBM email address into the <strong>SSO / IBMid</strong> field on the Bob login page. Bob should redirect you to the IBM single sign-on page.</li>
+    <li>If you don't have access yet, request it at <a href="https://w3.ibm.com/w3publisher/bob" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">w3.ibm.com/w3publisher/bob</a>. Approval is by email and may not be instant, so don't wait for it during the lab — follow along with a neighbour, or register a free-trial IBMid (Step 2, Option A) as a stopgap.</li>
+  </ul>
+
+  <div class="cds--inline-notification cds--inline-notification--info">
+    <span class="notif-icon">ℹ️</span>
+    <div class="notif-body">
+      <p class="notif-title">Check your Bob Coins</p>
+      <p>A new free trial gives you <strong>50 Bobcoins for 30 days</strong>. The lab allocation is separate. After you sign in, open <strong>Settings</strong> in Bob to check your balance. If it shows only the trial coins, or zero, tell an instructor straight away and give them your email address.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
+  <h2 class="section-heading">Common Sign-Up Problems</h2>
+  <div class="cds--data-table-container">
+    <table class="cds--data-table">
+      <thead><tr><th>What you see</th><th>What to do</th></tr></thead>
+      <tbody>
+        <tr><td>The verification code never arrives</td><td>Check spam/junk, then click <strong>Resend code</strong>. Check the email address for typos. If it still fails, use <strong>Sign up with Google</strong> or <strong>GitHub</strong> instead.</td></tr>
+        <tr><td>"Account already exists"</td><td>You already have an IBMid. Skip registration and go straight to the Bob login page. If you've forgotten the password, use the password reset on the IBM login page.</td></tr>
+        <tr><td>Bob opens but stays on the sign-in screen</td><td>Go to <a href="https://bob.ibm.com/login" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">bob.ibm.com/login</a> in a browser, finish signing in there, then go back to Bob.</td></tr>
+        <tr><td>Sign-in fails on a company laptop or VPN</td><td>Your network may be blocking Bob. Turn off the VPN or switch to the guest wifi and try again.</td></tr>
+        <tr><td>Bob won't open on a Mac</td><td>You may have installed the wrong chip version. Check <strong>About This Mac → Chip</strong> and reinstall the other one (<strong>Mac ARM</strong> vs <strong>Mac Intel</strong>).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /cds--content -->
+</div><!-- /tab-troubleshooting -->
+
+
 <footer class="cds--footer" role="contentinfo">
   <svg width="23" height="9" viewBox="0 0 23 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="IBM" class="cds--footer__logo">
     <rect y="0" width="23" height="1.5" fill="#0f62fe"/>
@@ -1433,6 +1620,35 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
 </footer>
 
 <script>
+document.querySelectorAll('.cds--prompt-card').forEach(card => {
+  const textEl = card.querySelector('.prompt-text');
+  if (!textEl) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'copy-btn';
+  btn.setAttribute('aria-label', 'Copy prompt');
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M28 10v18H10V10h18m0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2z"/><path d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4z"/></svg><span>Copy</span>';
+  btn.addEventListener('click', () => {
+    const text = textEl.textContent.trim().replace(/^["\u201C]|["\u201D]$/g, '');
+    const done = () => {
+      btn.classList.add('copied');
+      btn.querySelector('span').textContent = 'Copied!';
+      setTimeout(() => { btn.classList.remove('copied'); btn.querySelector('span').textContent = 'Copy'; }, 1500);
+    };
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  });
+  card.appendChild(btn);
+});
+
 function showTab(id, btn) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.cds--tabs__nav-link').forEach(b => {
