@@ -1194,6 +1194,38 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Once you've accepted the invite, logged in to <a href="https://cloud.ibm.com" target="_blank">cloud.ibm.com</a>, and have the IBM Cloud CLI installed, come back here and continue to Step 1.</p>
+
+        <!-- Alternative: no email invite -->
+        <div style="margin-top:var(--s-05);padding:var(--s-05);border:1px solid var(--border-subtle);border-left:4px solid var(--cds-purple-70);background:var(--cds-purple-10);">
+          <p style="font-weight:600;margin:0 0 6px 0;">Alternative — I never received an email invite</p>
+          <p style="margin:0 0 10px 0;">Along with this lab guide (attached in the email received on <strong>Sunday Oct 25th</strong> or in the <strong>TechZone event</strong>) you should have received an <strong>Excel sheet</strong>. In the Excel sheet, <strong>find your name</strong> and use the <strong>cloud link</strong>, <strong>username</strong> and <strong>password</strong> on your row. If the invite email never arrived, use those instead. You still need the IBM Cloud CLI installed (see above).</p>
+          <ol style="margin:0 0 0 20px;padding:0;line-height:1.7;">
+            <li>Open the IBM Cloud link you were given. Enter the <strong>login</strong> and <strong>password</strong> you were given, then click <strong>Sign in</strong>.</li>
+            <li>Once the IBM Cloud dashboard loads, click the <strong>profile icon</strong> in the top right corner.</li>
+            <li>In the menu, click <strong>Log in to CLI and API</strong>.</li>
+            <li>A <strong>One time passcode</strong> window opens. Copy the <strong>IBM Cloud CLI</strong> command (<code>ibmcloud login -a https://cloud.ibm.com -u passcode -p …</code>) using the copy icon. You'll paste it into Bob in Step 1.</li>
+          </ol>
+
+          <img src="./lab-screenshots/alt-login-1-signin.png" alt="IBM Technology Zone sign-in page with the username, password and Sign in button highlighted in red" class="sc-img" style="max-width:420px;" />
+          <p class="sc-caption">1 · Sign in with the login and password you were given — enter the username and password, then click Sign in</p>
+
+          <img src="./lab-screenshots/alt-login-2-dashboard.png" alt="IBM Cloud dashboard with the profile icon in the top right highlighted in red" class="sc-img" />
+          <p class="sc-caption">2 · On the IBM Cloud dashboard, click the profile icon in the top right corner</p>
+
+          <img src="./lab-screenshots/alt-login-3-menu.png" alt="Profile menu with Log in to CLI and API highlighted in red" class="sc-img" style="max-width:260px;" />
+          <p class="sc-caption">3 · Choose "Log in to CLI and API"</p>
+
+          <img src="./lab-screenshots/alt-login-4-passcode.png" alt="One time passcode window with the IBM Cloud CLI login command highlighted in red" class="sc-img" />
+          <p class="sc-caption">4 · Copy the IBM Cloud CLI login command — you'll paste it into Bob in Step 1</p>
+
+          <div class="cds--inline-notification cds--inline-notification--warning">
+            <span class="notif-icon">⏱️</span>
+            <div class="notif-body">
+              <p class="notif-title">The passcode expires in about 5 minutes</p>
+              <p>Copy the command right before you paste it into Bob in Step 1. If it expires, repeat steps 2–4 to get a fresh one. Each passcode works once.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1207,6 +1239,21 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           <div>
             <div class="prompt-meta">Bob Prompt — Deploy</div>
             <div class="prompt-text">"I want to deploy this API endpoint to Code Engine now, how do I do that — walk me through step by step."</div>
+          </div>
+        </div>
+        <p style="margin-top:10px;"><strong>Alternative — no email invite?</strong> If you used the link, login and password instead (Step 0), paste the command you copied from <strong>Log in to CLI and API</strong> into this prompt in place of the placeholder, then send it:</p>
+        <div class="cds--prompt-card">
+          <div class="prompt-badge">8</div>
+          <div>
+            <div class="prompt-meta">Bob Prompt — Deploy (Alternative: no email invite)</div>
+            <div class="prompt-text">"Please log in to IBM Cloud using this command: [paste your ibmcloud login command here]. Then I want to deploy this API endpoint to Code Engine now, how do I do that — walk me through step by step."</div>
+          </div>
+        </div>
+        <div class="cds--inline-notification cds--inline-notification--info">
+          <span class="notif-icon">ℹ️</span>
+          <div class="notif-body">
+            <p class="notif-title">Using the alternative account?</p>
+            <p>The Code Engine project and region differ from the table below. Tell Bob to use the Code Engine project already in your account. If Bob gets a <strong>forbidden</strong> error when building in Code Engine, ask it to build the image locally and push it to the Container Registry namespace in your account instead.</p>
           </div>
         </div>
         <p style="margin-top:10px;">Bob will look at what you have (<code>app.py</code>, <code>requirements.txt</code>), generate a Dockerfile, walk you through IBM Cloud authentication, and produce the exact deploy commands. Follow each step as Bob presents it — read before confirming.</p>
@@ -1458,6 +1505,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
       <strong>Track B · Block 3 — Deploy to IBM Code Engine</strong>
     </p>
     <div class="cds--prompt-card"><div class="prompt-badge">9</div><div><div class="prompt-meta">Deploy</div><div class="prompt-text">"I want to deploy this API endpoint to Code Engine now, how do I do that — walk me through step by step."</div></div></div>
+    <div class="cds--prompt-card"><div class="prompt-badge">9</div><div><div class="prompt-meta">Deploy (Alternative: no email invite)</div><div class="prompt-text">"Please log in to IBM Cloud using this command: [paste your ibmcloud login command here]. Then I want to deploy this API endpoint to Code Engine now, how do I do that — walk me through step by step."</div></div></div>
     <div class="cds--prompt-card"><div class="prompt-badge">10</div><div><div class="prompt-meta">After Deployment</div><div class="prompt-text">"My application is deployed on Code Engine and I have a live URL. How do I test it?"</div></div></div>
     <div class="cds--prompt-card" style="border-left-color:var(--cds-gray-50);"><div class="prompt-badge" style="background:var(--cds-gray-20);color:var(--cds-gray-70);">★</div><div><div class="prompt-meta">Optional · Orchestrate Agent</div><div class="prompt-text">"My ticket classifier API is live at [your Code Engine URL]. Can you generate a watsonx Orchestrate agent YAML that registers POST /classify as an HTTP tool, so an agent can call it when an employee describes a support issue?"</div></div></div>
 
