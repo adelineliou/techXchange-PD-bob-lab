@@ -136,7 +136,7 @@ body {
   color: #e0e0e0; white-space: nowrap;
 }
 
-.cds--tabs { background: var(--layer-02); border-bottom: 1px solid var(--border-subtle); }
+.cds--tabs { background: var(--layer-02); border-bottom: 1px solid var(--border-subtle); position: sticky; top: 48px; z-index: 7999; }
 .cds--tabs__nav {
   display: flex; list-style: none;
   max-width: 1200px; margin: 0 auto;
@@ -556,6 +556,17 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
 </div>
 
 <div class="cds--row">
+  <div class="cds--inline-notification cds--inline-notification--info">
+    <span class="notif-icon">💬</span>
+    <div class="notif-body">
+      <p class="notif-title">Before you start: this lab is non-deterministic</p>
+      <p>Bob is an AI, so the same prompt can give slightly different answers, code, and follow-up questions from one person to the next. Your steps and outputs may differ from the screenshots &mdash; and from the person beside you. That's by design.</p>
+      <p style="margin-top:8px;">You aren't being graded on matching an exact result. The lab is meant to get you thinking about how Bob can help you accomplish <strong>large tasks</strong> &mdash; cloning an unfamiliar repo, building an API, deploying it to the cloud &mdash; through <strong>simple, conversational requests</strong>. If something looks different, or Bob asks a question the guide doesn't mention, answer it, or tell Bob what went wrong and let it adapt.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cds--row">
 <h2 class="section-heading">Choose Your Track</h2>
   <p>Both groups run in parallel for all 45 minutes. Read your track carefully before the session starts — then open the matching tab above for your step-by-step guide.</p>
   <div class="cds--grid-2" style="margin-top:var(--s-05);">
@@ -570,7 +581,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
     <div class="track-tile track-b">
       <div class="track-overline">🟣 Track B — Seen Bob Before</div>
       <h3>You've tried Bob at least once and don't need a UI tour — ready to build and deploy</h3>
-      <p>You'll skip the interface walkthrough and jump straight into running the application, understanding the API layer with Bob, and deploying a live endpoint to IBM Code Engine. You leave with a real URL you can demo to a client.</p>
+      <p>You'll skip the interface walkthrough and jump straight into running the application, understanding the API layer with Bob, and deploying a live endpoint to IBM Code Engine. <strong>The end goal: a fully deployed, live, public API endpoint</strong> &mdash; a real URL you can demo to a client.</p>
       <div class="block-item"><div class="block-dot">B1</div><p>Ask Bob to clone the repo, install dependencies, run the classifier, and explain the codebase — all via prompts.</p></div>
       <div class="block-item"><div class="block-dot">B2</div><p>Ask Bob to generate <code>app.py</code>, start the API, and test all three ticket scenarios with curl.</p></div>
       <div class="block-item"><div class="block-dot">B3</div><p>Authenticate with IBM Cloud via Bob, deploy to Code Engine, get a live URL, connect to Orchestrate.</p></div>
@@ -614,6 +625,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
     <p class="notif-title">Track A — New to Bob</p>
     <p>This is your complete step-by-step guide. Work through each block in order. Every Bob prompt is integrated inline — just copy and paste it into Bob when you reach it.</p>
     <p style="margin-top:8px;"><strong>👆 Approve tasks when prompted.</strong> Throughout this lab Bob will ask you to approve actions before running them. If the action looks correct, click <strong>Approve Task</strong> to proceed. This happens frequently — it's Bob being safe, not stuck.</p>
+    <p style="margin-top:8px;"><strong>This lab is non-deterministic.</strong> Bob is an AI, so your answers, generated code, and follow-up questions may differ slightly from the screenshots and from the person next to you. That's expected. The goal isn't to reproduce one exact result &mdash; it's to experience how simple, conversational requests can help you accomplish large tasks.</p>
   </div>
 </div>
 
@@ -763,6 +775,17 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
             </div>
           </div>
         </div>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">⚠️</span>
+          <div class="notif-body">
+            <p class="notif-title">Bob says &ldquo;Restricted Mode&rdquo; after the folder opens?</p>
+            <p>When the cloned folder opens as your workspace, Bob may start in <strong>Restricted Mode</strong> and won&rsquo;t be able to work in it. This is a safety check, not an error. Click <strong>Manage</strong> (or the <strong>Restricted Mode</strong> badge in the bottom-left corner), then click <strong>Trust</strong> on the Workspace Trust page. </p>
+            <img src="./lab-screenshots/trust-1-restricted-badge.png" alt="Restricted Mode badge in the bottom-left status bar, marked in red" class="sc-img" style="max-width:420px;margin-top:8px;" />
+            <p class="sc-caption">1. The <strong>Restricted Mode</strong> badge, bottom-left. Click it to open Workspace Trust.</p>
+            <img src="./lab-screenshots/trust-2-workspace-trust.png" alt="Workspace Trust page with the Trust button marked in red" class="sc-img" style="max-width:640px;" />
+            <p class="sc-caption">2. Click <strong>Trust</strong>. The badge disappears and Bob can use the workspace.</p>
+          </div>
+        </div>
         <div class="sc-row">
           <img src="./lab-screenshots/bob2.11.png" alt="Bob terminal running git clone command" class="sc-img" />
           <img src="./lab-screenshots/bob2.12.png" alt="Bob file tree visible after clone" class="sc-img" />
@@ -808,6 +831,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         </div>
         <p style="margin-top:10px;">Bob will trace the data flow through <code>CLASSIFICATION_RULES</code> → <code>ROUTING_RULES</code> → <code>TicketResult</code>, and flag any issues it finds. Follow along in the file — you'll need this context in Block 3.</p>
         <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>The classification here is keyword-based. Down the line, you could ask Bob to replace this with any AI model or inference service — same output format, much smarter on ambiguous inputs.</em></p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Bob's walkthrough, and any bugs it finds or fixes, may differ from what the person next to you gets &mdash; the same prompt can produce a slightly different answer each time. Don't look for one right answer. Notice that one plain-English question gave you a working map of unfamiliar code.</em></p>
       </div>
     </div>
 
@@ -869,6 +893,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         </div>
         <p style="margin-top:10px;">Bob will generate <code>app.py</code> with a <code>POST /classify</code> endpoint and a <code>GET /health</code> endpoint. Open the file and read through it — notice how it imports directly from <code>ticket_classifier.py</code>.</p>
         <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This is the delivery acceleration moment — wrapping a client's existing logic as a production API, without rewriting anything. Bob generates the boilerplate; you focus on the business value.</em></p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Your <code>app.py</code> may look different from the screenshot or from your neighbour's &mdash; Bob can structure the same API in several valid ways. Check that it works, not that it matches.</em></p>
         <div class="sc-row">
           <img src="./lab-screenshots/bob3.11.png" alt="Bob explaining API integration strategy" class="sc-img" />
           <img src="./lab-screenshots/bob3.12.png" alt="Bob generating app.py FastAPI wrapper" class="sc-img" />
@@ -958,6 +983,15 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
   </div>
 </div>
 
+<div class="cds--inline-notification cds--inline-notification--success">
+  <span class="notif-icon">🎯</span>
+  <div class="notif-body">
+    <p class="notif-title">The end goal: a fully deployed, live, public API endpoint</p>
+    <p>By the end of this track you'll have the support-ticket classifier running on IBM Code Engine, reachable from the public internet at its own URL &mdash; and you'll have built and deployed it by talking to Bob, not by writing the code or the deployment steps yourself.</p>
+    <p style="margin-top:8px;"><strong>This lab is non-deterministic.</strong> Bob is an AI, so the same prompt can produce slightly different answers, code, and follow-up questions for each person. Your outputs won't match the screenshots exactly, and that's fine. The point isn't to reproduce one exact result &mdash; it's to see how simple, conversational requests can get you through a large task like <em>clone, build, and deploy</em>.</p>
+  </div>
+</div>
+
 <!-- ═══ BLOCK 1 ═══ -->
 <div class="lab-block">
   <div class="block-header">
@@ -999,6 +1033,17 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
                 <div class="prompt-text">"I have a zip file of the lab repo on my desktop called techXchange-PD-bob-lab.zip — can you unzip it and open the support-ticket-lab folder as my workspace?"</div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="cds--inline-notification cds--inline-notification--warning">
+          <span class="notif-icon">⚠️</span>
+          <div class="notif-body">
+            <p class="notif-title">Bob says &ldquo;Restricted Mode&rdquo; after the folder opens?</p>
+            <p>When the cloned folder opens as your workspace, Bob may start in <strong>Restricted Mode</strong> and won&rsquo;t be able to work in it. This is a safety check, not an error. Click <strong>Manage</strong> (or the <strong>Restricted Mode</strong> badge in the bottom-left corner), then click <strong>Trust</strong> on the Workspace Trust page. </p>
+            <img src="./lab-screenshots/trust-1-restricted-badge.png" alt="Restricted Mode badge in the bottom-left status bar, marked in red" class="sc-img" style="max-width:420px;margin-top:8px;" />
+            <p class="sc-caption">1. The <strong>Restricted Mode</strong> badge, bottom-left. Click it to open Workspace Trust.</p>
+            <img src="./lab-screenshots/trust-2-workspace-trust.png" alt="Workspace Trust page with the Trust button marked in red" class="sc-img" style="max-width:640px;" />
+            <p class="sc-caption">2. Click <strong>Trust</strong>. The badge disappears and Bob can use the workspace.</p>
           </div>
         </div>
         <div class="sc-row">
@@ -1046,6 +1091,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         </div>
         <p style="margin-top:10px;">This is the same kind of codebase orientation question you'd use on a client engagement. Bob will trace the data flow and flag any issues. Read it — you'll need this context in Block 2.</p>
         <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This keyword matching works well for structured inputs. If you wanted smarter classification on messy, real-world ticket descriptions, Bob can swap this logic out for any AI model or inference service — no change to the API interface required.</em></p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Bob's explanation and the bugs it finds or fixes may differ from what the person next to you sees &mdash; the same prompt can give a slightly different answer each time. You're not checking for one right answer; you're seeing how a single conversational request can replace an hour of reading unfamiliar code.</em></p>
       </div>
     </div>
 
@@ -1090,6 +1136,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         </div>
         <p style="margin-top:10px;">Bob will generate <code>app.py</code> with a <code>POST /classify</code> endpoint. Open the file and read through it.</p>
         <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>This is the delivery moment — existing client logic, now exposed as a proper API, with Bob writing the boilerplate. The same approach works on any function or module a client asks you to productionise.</em></p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Your <code>app.py</code> won't be identical to your neighbour's or to the screenshot &mdash; Bob may name things differently, add extra endpoints, or structure the file another way. Don't compare line by line. Ask yourself: does it accept a ticket and return a routing decision? If yes, you're on track.</em></p>
         <div class="sc-row">
           <img src="./lab-screenshots/bob3.11.png" alt="Bob explaining API integration" class="sc-img" />
           <img src="./lab-screenshots/bob3.12.png" alt="Bob generating app.py" class="sc-img" />
@@ -1257,6 +1304,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
           </div>
         </div>
         <p style="margin-top:10px;">Bob will look at what you have (<code>app.py</code>, <code>requirements.txt</code>), generate a Dockerfile, walk you through IBM Cloud authentication, and produce the exact deploy commands. Follow each step as Bob presents it — read before confirming.</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Deployment is the step where Bob's path varies the most. It may build in Code Engine, build locally and push to the registry, or ask you different questions along the way &mdash; and a command may fail and need a retry. That's normal. If something errors, paste the error back to Bob and let it adapt. Don't try to match the screenshots line for line.</em></p>
         <div class="cds--inline-notification cds--inline-notification--info">
           <span class="notif-icon">ℹ️</span>
           <div class="notif-body">
@@ -1311,6 +1359,7 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         </div>
         <p style="margin-top:10px;">Bob will retrieve the URL and run a live test against <code>/classify</code>.</p>
         <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>That URL is your demo asset. Screen-share it with a client, POST a real ticket description, and show them the response in under a second. "This is what we built this afternoon" is a powerful close to any discovery conversation.</em></p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:13px;">💡 <em>Your URL, your test output, and the exact commands Bob ran will differ from the screenshots and from the person next to you &mdash; that's expected. What matters: you went from an idea to a live public endpoint by having a conversation, not by memorising a deployment procedure.</em></p>
         <div class="sc-row">
           <img src="./lab-screenshots/bob 4.20.png" alt="Bob retrieving the live Code Engine URL" class="sc-img" />
           <img src="./lab-screenshots/bob 4.21.png" alt="Bob running a live test against the deployed endpoint" class="sc-img" />
@@ -1647,9 +1696,43 @@ code { font-family: "IBM Plex Mono", "Courier New", monospace; font-size: 13px; 
         <tr><td>"Account already exists"</td><td>You already have an IBMid. Skip registration and go straight to the Bob login page. If you've forgotten the password, use the password reset on the IBM login page.</td></tr>
         <tr><td>Bob opens but stays on the sign-in screen</td><td>Go to <a href="https://bob.ibm.com/login" target="_blank" rel="noopener" style="color:var(--cds-blue-60);">bob.ibm.com/login</a> in a browser, finish signing in there, then go back to Bob.</td></tr>
         <tr><td>Sign-in fails on a company laptop or VPN</td><td>Your network may be blocking Bob. Turn off the VPN or switch to the guest wifi and try again.</td></tr>
+        <tr><td>Bob says <strong>Restricted Mode</strong> after cloning the repo</td><td>Click <strong>Manage</strong> (or the Restricted Mode badge, bottom-left), then click <strong>Trust</strong>. <a href="#ts-trust" style="color:var(--cds-blue-60);">See the screenshots above</a>.</td></tr>
         <tr><td>Bob won't open on a Mac</td><td>You may have installed the wrong chip version. Check <strong>About This Mac → Chip</strong> and reinstall the other one (<strong>Mac ARM</strong> vs <strong>Mac Intel</strong>).</td></tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="cds--row" id="ts-trust">
+  <h2 class="section-heading">Bob Says &ldquo;Restricted Mode&rdquo; After Cloning</h2>
+  <p>After Bob clones the repo and opens the folder, VS Code-style <strong>Workspace Trust</strong> may put the window in <strong>Restricted Mode</strong>. Bob can browse the code but can&rsquo;t run tasks or use the workspace settings, so the lab steps will stall. You fix it by trusting the folder once.</p>
+
+  <div class="lab-step" style="margin-top:var(--s-06);">
+    <div class="step-num a">1</div>
+    <div class="step-content">
+      <h4>Spot Restricted Mode</h4>
+      <p>Look at the bottom-left corner of the Bob window. A blue <strong>Restricted Mode</strong> badge means the folder isn&rsquo;t trusted yet. A banner with a <strong>Manage</strong> button may also appear at the top. Click <strong>Manage</strong>, or click the badge.</p>
+      <img src="./lab-screenshots/trust-1-restricted-badge.png" alt="Restricted Mode badge in the bottom-left status bar, marked in red" class="sc-img" style="max-width:420px;" />
+      <p class="sc-caption">The <strong>Restricted Mode</strong> badge (red box) in the bottom-left status bar</p>
+    </div>
+  </div>
+
+  <div class="lab-step">
+    <div class="step-num a">2</div>
+    <div class="step-content">
+      <h4>Click Trust</h4>
+      <p>The <strong>Workspace Trust</strong> page opens. Under <strong>In a Trusted Folder</strong>, click the blue <strong>Trust</strong> button (or press <code>Cmd+Enter</code> on Mac). You&rsquo;re trusting the folder you just cloned, which is safe for this lab.</p>
+      <img src="./lab-screenshots/trust-2-workspace-trust.png" alt="Workspace Trust page with the Trust button marked in red" class="sc-img" style="max-width:700px;" />
+      <p class="sc-caption">Click <strong>Trust</strong> (red box). The Restricted Mode badge disappears.</p>
+    </div>
+  </div>
+
+  <div class="cds--inline-notification cds--inline-notification--info">
+    <span class="notif-icon">ℹ️</span>
+    <div class="notif-body">
+      <p class="notif-title">Still stuck?</p>
+      <p>If Bob still can&rsquo;t run tasks after you trust the folder, re-send your last prompt in a new chat. If that fails, tell an instructor.</p>
+    </div>
   </div>
 </div>
 
